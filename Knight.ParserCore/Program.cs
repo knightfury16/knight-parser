@@ -8,15 +8,25 @@ class Program
     {
         //this is the expression i want to Parse
         //(2 + ( 4 -2 ))
-        var myExpression = "(123 + ( 4 - 2 ))";
+        var myExpression = "(123 + (6 / 2) * 321 * ( 4 - 2 ))";
         var stringReader = new StringReader(myExpression);
 
-        var tokens = Tokenizer.Tokenize(stringReader);
-
-        foreach (var token in tokens)
+        if (Tokenizer.ValidateExpression(stringReader))
         {
-            Console.WriteLine(token);
+
+            var tokens = Tokenizer.Tokenize(new StringReader(myExpression));
+
+            foreach (var token in tokens)
+            {
+                Console.WriteLine(token);
+            }
+
         }
+        else
+        {
+            Console.WriteLine("Your provided expression is not valid");
+        }
+
 
     }
 }
@@ -82,6 +92,38 @@ public class Tokenizer
         }
 
         return tokens;
+    }
+
+    public static bool ValidateExpression(TextReader reader)
+    {
+        var parenStack = new Stack<char>();
+
+        int input;
+
+        while (true)
+        {
+            input = reader.Read();
+            if (input == -1) break;
+
+            if ((char)input == '(')
+            {
+                parenStack.Push('(');
+                continue;
+            }
+
+            if ((char)input == ')')
+            {
+                //i have a close bracket but stack is empty, then the exression is not valid
+                if (parenStack.Count == 0) return false;
+                parenStack.Pop();
+                continue;
+            }
+        }
+
+        //out the looop i still have open paren, expression is not valid
+        if (parenStack.Count > 0) return false;
+
+        return true;
     }
 
 }
