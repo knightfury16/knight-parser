@@ -7,8 +7,9 @@ class Program
     static void Main(string[] args)
     {
         //this is the expression i want to Parse
-        //(2 + ( 4 -2 ))
-        var myExpression = "(123 + (6 / 2) * 321 * ( 4 - 2 ))";
+        // var myExpression = "(2 * ( 4 - 2 ))";
+        var myExpression = "(123 + (6 / 2) * (321) * ( 4 - 2 ))";
+        // var myExpression = "((6 / 2) * (321) * ( 4 - 2 ))";
         var stringReader = new StringReader(myExpression);
 
         if (Tokenizer.ValidateExpression(stringReader))
@@ -16,10 +17,10 @@ class Program
 
             var tokens = Tokenizer.Tokenize(new StringReader(myExpression));
 
-            foreach (var token in tokens)
-            {
-                Console.WriteLine(token);
-            }
+            var parser = new Parser(tokens);
+            // the parent ast node
+            AstNode ast = parser.ParseExpression();
+            AstVisitor.Visit(ast, 0);
 
         }
         else
