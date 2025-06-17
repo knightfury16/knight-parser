@@ -31,6 +31,21 @@ class Program
     }
 }
 
+
+public abstract class AstNode { }
+
+public class NumberNode(string value) : AstNode
+{
+    public string Value { get; set; } = value;
+}
+
+public class BinaryOpNode(string operation, AstNode left, AstNode right) : AstNode
+{
+    public string Operation { get; set; } = operation;
+    public AstNode Left { get; set; } = left;
+    public AstNode Right { get; set; } = right;
+}
+
 public class Tokenizer
 {
     public static IEnumerable<Token> Tokenize(TextReader reader)
