@@ -37,6 +37,11 @@ public abstract class AstNode { }
 public class NumberNode(string value) : AstNode
 {
     public string Value { get; set; } = value;
+
+    public override string ToString()
+    {
+        return $"Number: {Value} ";
+    }
 }
 
 public class BinaryOpNode(string operation, AstNode left, AstNode right) : AstNode
