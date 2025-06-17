@@ -50,6 +50,65 @@ public class BinaryOpNode(string operation, AstNode left, AstNode right) : AstNo
 // expression ::= term ( ('+' | '-') term)*
 // term ::= factor ( ( '*' | '/') factor)*
 // factor ::= number | expression
+
+public class AstVisitor
+{
+    private static int _depth = 0;
+    public static void Visit(AstNode node)
+    {
+        PutSpacer();
+        if (node is NumberNode numberNode)
+        {
+            Console.WriteLine($"Number: {numberNode.Value}");
+        }
+        else if (node is BinaryOpNode binaryOp)
+        {
+            Console.WriteLine($"Expression: {binaryOp.Operation}");
+            var leftNode = binaryOp.Left;
+            var righNode = binaryOp.Right;
+            _depth++;
+            Visit(leftNode);
+            Visit(righNode);
+        }
+    }
+
+    public static void Visit(AstNode node, int depth)
+    {
+        PutSpacer(depth);
+
+        if (node is NumberNode numberNode)
+        {
+            Console.WriteLine($"Number: {numberNode.Value}");
+        }
+        else if (node is BinaryOpNode binaryOp)
+        {
+            Console.WriteLine($"Expression: {binaryOp.Operation}");
+            var leftNode = binaryOp.Left;
+            var righNode = binaryOp.Right;
+            var leftDepth = depth + 1;
+            var rightDepth = depth + 1;
+            Visit(leftNode, leftDepth);
+            Visit(righNode, rightDepth);
+        }
+    }
+
+    private static void PutSpacer()
+    {
+        for (int i = 0; i < _depth; i++)
+        {
+            Console.Write(" ");
+        }
+    }
+    private static void PutSpacer(int depth)
+    {
+        for (int i = 0; i < depth; i++)
+        {
+            Console.Write(" ");
+        }
+    }
+}
+
+
 public class Parser
 {
     private List<Token> _tokens;
