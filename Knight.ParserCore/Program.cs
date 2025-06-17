@@ -46,6 +46,10 @@ public class BinaryOpNode(string operation, AstNode left, AstNode right) : AstNo
     public AstNode Right { get; set; } = right;
 }
 
+// Defined Grammer for this expression evaluation
+// expression ::= term ( ('+' | '-') term)*
+// term ::= factor ( ( '*' | '/') factor)*
+// factor ::= number | expression
 public class Tokenizer
 {
     public static IEnumerable<Token> Tokenize(TextReader reader)
