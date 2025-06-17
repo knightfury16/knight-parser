@@ -50,6 +50,100 @@ public class BinaryOpNode(string operation, AstNode left, AstNode right) : AstNo
 // expression ::= term ( ('+' | '-') term)*
 // term ::= factor ( ( '*' | '/') factor)*
 // factor ::= number | expression
+public class Parser
+{
+    private List<Token> _tokens;
+    private int _position = 0;
+
+    public Parser(IEnumerable<Token> tokens)
+    {
+        _tokens = tokens.ToList();
+        _position = 0;
+    }
+
+    private Token? Peek()
+    {
+        return _position < _tokens.Count ? _tokens[_position] : null;
+    }
+
+    private Token Consume()
+    {
+        return _tokens[_position++];
+    }
+
+    private bool Match(string operand)
+    {
+        var token = Peek();
+
+        if (token == null) return false;
+
+        return token.TokenType == operand;
+    }
+
+    //I need method for each grammer term
+    //(2 + ( 4 -2 ))
+    public AstNode ParseExpression()
+    {
+        //(6 / 2) * (321) * ( 4 - 2 )
+        var left = ParseTerm();
+        while (Match("addition") || Match("sub"))
+        {
+            var token = Consume();
+            var right = ParseTerm();
+            left = new BinaryOpNode(token.TokenType, left, right); // will return a BinaryOpNode
+        }
+        return left; // like the expression (2) , will return a NumberNode
+    }
+
+    public AstNode ParseTerm()
+    {
+        //(6 / 2) * (321) * ( 4 - 2 )
+        var left = ParseFactor();
+        while (Match("multiply") || Match("divide"))
+        {
+            var token = Consume();
+            var right = ParseFactor();
+            left = new BinaryOpNode(token.TokenType, left, right);
+        }
+
+        return left;
+    }
+
+    public AstNode ParseFactor()
+    {
+        var token = Peek();
+
+        if (token == null) throw new ArgumentNullException();
+
+        if (token.TokenType == "number")
+        {
+            //move the cursor position
+            Consume();
+            return new NumberNode(token.Value);
+        }
+        else if (token.TokenType == "paren" && token.Value == "(")
+        {
+            //move the cursor
+            //example: (2)
+            Consume();
+            // so if its not a number then it can only be an expression according to grammar
+            //(6 / 2) * (321) * ( 4 - 2 )
+            var expr = ParseExpression(); // after this the cursor will be moved to the last place
+
+            token = Peek();
+            ArgumentNullException.ThrowIfNull(token);
+
+            //recursin is killing my brain cell and i like it.
+            Consume(); // consume ')'
+            return expr;
+        }
+
+        throw new Exception($"Unexpected Token: {token.ToString()}");
+    }
+}
+
+
+
 public class Tokenizer
 {
     public static IEnumerable<Token> Tokenize(TextReader reader)
