@@ -21,7 +21,8 @@ class Program
             // the parent ast node
             AstNode ast = parser.ParseExpression();
             AstVisitor.Visit(ast, 0);
-
+            Console.WriteLine("Start evaluating ast...");
+            Console.WriteLine(Evaluator.Evaluate(ast));
         }
         else
         {
