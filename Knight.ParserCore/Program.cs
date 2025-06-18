@@ -56,7 +56,9 @@ public class Evaluator
                 case "multiply":
                     return Evaluate(left) * Evaluate(right);
                 case "divide":
-                    return Evaluate(left) / Evaluate(right);
+                    var rightValue = Evaluate(right);
+                    if (rightValue == 0) throw new DivideByZeroException();
+                    return Evaluate(left) / rightValue;
                 default:
                     throw new Exception("No operation match to evaluate");
             }
