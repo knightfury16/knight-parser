@@ -32,6 +32,40 @@ class Program
     }
 }
 
+public class Evaluator
+{
+    public static int Evaluate(AstNode node)
+    {
+        if (node is NumberNode numberNode)
+        {
+            return int.Parse(numberNode.Value);
+        }
+        else if (node is BinaryOpNode binaryOpNode)
+        {
+            var left = binaryOpNode.Left;
+            var right = binaryOpNode.Right;
+            var operation = binaryOpNode.Operation;
+
+            switch (operation)
+            {
+                case "addition":
+                    return Evaluate(left) + Evaluate(right);
+                case "sub":
+                    return Evaluate(left) - Evaluate(right);
+                case "multiply":
+                    return Evaluate(left) * Evaluate(right);
+                case "divide":
+                    return Evaluate(left) / Evaluate(right);
+                default:
+                    throw new Exception("No operation match to evaluate");
+            }
+
+        }
+
+        throw new Exception("Ast node is not recognized");
+    }
+}
+
 
 public abstract class AstNode { }
 
