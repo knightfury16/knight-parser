@@ -8,26 +8,37 @@ class Program
     {
         //this is the expression i want to Parse
         // var myExpression = "(2 * ( 4 - 2 ))";
-        var myExpression = "(123 + (6 / 2) * (321) * ( 4 - 2 ))";
+        // var myExpression = "(123 + (6 / 2) * (321) * ( 4 - 2 ))";
         // var myExpression = "((6 / 2) * (321) * ( 4 - 2 ))";
-        var stringReader = new StringReader(myExpression);
+        var allTextContent = File.ReadAllText("./test.text");
+        var stringReader = new StringReader(allTextContent);
+        var esr = new ExtendedStringReader(stringReader);
 
-        if (Tokenizer.ValidateExpression(stringReader))
+        while (true)
         {
+            Console.WriteLine(esr.GetContext().ToString());
+            var input = esr.Read();
+            if (input == -1) break;
+            Console.WriteLine($"Character: {(char)input}");
 
-            var tokens = Tokenizer.Tokenize(new StringReader(myExpression));
+        }
 
-            var parser = new Parser(tokens);
-            // the parent ast node
-            AstNode ast = parser.ParseExpression();
-            AstVisitor.Visit(ast, 0);
-            Console.WriteLine("Start evaluating ast...");
-            Console.WriteLine(Evaluator.Evaluate(ast));
-        }
-        else
-        {
-            Console.WriteLine("Your provided expression is not valid");
-        }
+        // if (Tokenizer.ValidateExpression(stringReader))
+        // {
+        //
+        //     var tokens = Tokenizer.Tokenize(new StringReader(myExpression));
+        //
+        //     var parser = new Parser(tokens);
+        //     // the parent ast node
+        //     AstNode ast = parser.ParseExpression();
+        //     AstVisitor.Visit(ast, 0);
+        //     Console.WriteLine("Start evaluating ast...");
+        //     Console.WriteLine(Evaluator.Evaluate(ast));
+        // }
+        // else
+        // {
+        //     Console.WriteLine("Your provided expression is not valid");
+        // }
 
 
     }
