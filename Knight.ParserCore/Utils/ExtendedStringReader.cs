@@ -6,6 +6,7 @@ internal sealed class ExtendedStringReader : TextReader
 {
     private int _lineNumber;
     private int _charPosition;
+    private int _matched;
 
     private readonly TextReader _inner;
 
@@ -28,14 +29,27 @@ internal sealed class ExtendedStringReader : TextReader
 
     private void AdvancePosition(char c)
     {
-        //if the character is of line break, increment _lineNumber and reset _charPosition
-        if (Environment.NewLine[0] == c)
+        // let us consider \r\n on one line but two separate different character
+
+        if (Environment.NewLine[_matched] == c)
         {
+            if (Environment.NewLine.Length > 1 && _matched == 0)
+            {
+                _matched++;
+                _charPosition++;
+                return;
+            }
+
             _lineNumber++;
             _charPosition = 0;
-            return;
+            _matched = 0;
         }
-        _charPosition++;
+        else
+        {
+            _charPosition++;
+
+        }
+
     }
 
     public CharacterContext GetContext()
