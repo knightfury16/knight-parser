@@ -1,2 +1,9 @@
-Hello,
-World
+Hello, I'm {{name}}.
+
+{{#   if Ismale}}
+    Im a male.
+{{#else}}
+    Im a female.
+{{#endif}}
+
+And my age is {{age}}
