@@ -11,4 +11,9 @@ public class BlockWordToken : Token
         Value = value;
         Context = context;
     }
+
+    public static Token BlockWordTokenizer(ExtendedStringReader sourceReader)
+    {
+
+    }
 }
