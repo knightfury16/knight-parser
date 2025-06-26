@@ -11,4 +11,10 @@ public abstract class Token
     {
         return $"{Type.ToString()}: {Value}";
     }
+
+
+    public static StaticToken Static(string value, IReaderContext context)
+    {
+        return new StaticToken(value, context);
+    }
 }
