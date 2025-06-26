@@ -3,6 +3,9 @@ namespace Knight.ParserCore.Tokenizer;
 
 public abstract class Token
 {
+    //I could have context on the base class,
+    //but do i need context in all the tokne
+
     public abstract TokenType Type { get; }
 
     public abstract string Value { get; }
