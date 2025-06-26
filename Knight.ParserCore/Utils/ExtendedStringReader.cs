@@ -52,9 +52,9 @@ internal sealed class ExtendedStringReader : TextReader
 
     }
 
-    public CharacterContext GetContext()
+    public IReaderContext GetContext()
     {
-        return new CharacterContext
+        return new ReaderContext
         {
             LineNumber = _lineNumber,
             CharacterPosition = _charPosition
@@ -62,7 +62,7 @@ internal sealed class ExtendedStringReader : TextReader
     }
 
 
-    internal class CharacterContext
+    internal class ReaderContext : IReaderContext
     {
         public int LineNumber { get; set; }
         public int CharacterPosition { get; set; }
