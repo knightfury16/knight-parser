@@ -20,4 +20,27 @@ public abstract class Token
     {
         return new StaticToken(value, context);
     }
+
+    public static StartExpressionToken StartExpression(string value, IReaderContext context)
+    {
+        return new StartExpressionToken(value, context);
+    }
+
+    public static EndExpressionToken EndExpression(string value, IReaderContext context)
+    {
+        return new EndExpressionToken(value, context);
+    }
+
+    public static BlockWordToken BlockWord(string value, IReaderContext context)
+    {
+        return new BlockWordToken(value, context);
+    }
+    public static BlockAliasToken BlockAlias(string value, IReaderContext context)
+    {
+        return new BlockAliasToken(value, context);
+    }
+    public static VariableToken Variable(string value, IReaderContext context)
+    {
+        return new VariableToken(value, context);
+    }
 }
