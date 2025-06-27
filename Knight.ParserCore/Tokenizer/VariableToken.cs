@@ -35,7 +35,7 @@ internal class VariableToken : Token
 
             accumulator.Append((char)node);
 
-            if ((char)sourceReader.Peek() == '{' || (char)sourceReader.Peek() == ' ')
+            if ((char)sourceReader.Peek() == '}' || (char)sourceReader.Peek() == ' ')
             {
                 break;
             }
@@ -44,8 +44,6 @@ internal class VariableToken : Token
         }
 
         return new VariableToken(accumulator.ToString(), context);
-
-
     }
 
     private static bool IsValid(char node) => ValidVariableStartCharacter.Contains(node);
