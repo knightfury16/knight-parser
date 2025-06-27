@@ -257,102 +257,102 @@ public class Parser
 
 
 
-public class Tokenizer
-{
-    public static IEnumerable<Token> Tokenize(TextReader reader)
-    {
-        var validNumbers = new List<char> { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-        var operators = new Dictionary<char, string>
-        {
-            {'+', "addition"},
-            {'-', "sub"},
-            {'*', "multiply"},
-            {'/', "divide"},
-        }
-        ;
-        var tokens = new List<Token>();
-
-        int input;
-
-        while (true)
-        {
-            input = reader.Read();
-
-            if (input == -1) break;
-
-            if ((char)input == '(' || (char)input == ')')
-            {
-                tokens.Add(new Token("paren", (char)input));
-                continue;
-            }
-
-            if (validNumbers.Contains((char)input))
-            {
-                var fullNumber = new StringBuilder();
-                fullNumber.Append((char)input);
-
-                while (validNumbers.Contains((char)reader.Peek()))
-                {
-                    input = reader.Read();
-                    fullNumber.Append((char)input);
-                }
-
-                tokens.Add(new Token("number", fullNumber.ToString()));
-                continue;
-            }
-
-            if (operators.TryGetValue((char)input, out string? result))
-            {
-                if (result is not null)
-                {
-                    tokens.Add(new Token(result, (char)input));
-                }
-                continue;
-            }
-
-            //ignoring the whitespace
-            if ((char)input == ' ') continue;
-
-            //if im here no condition got matched. throw some error 
-            throw new Exception($"Could not match the character {input} ");
-        }
-
-        return tokens;
-    }
-
-    public static bool ValidateExpression(TextReader reader)
-    {
-        var parenStack = new Stack<char>();
-
-        int input;
-
-        while (true)
-        {
-            input = reader.Read();
-            if (input == -1) break;
-
-            if ((char)input == '(')
-            {
-                parenStack.Push('(');
-                continue;
-            }
-
-            if ((char)input == ')')
-            {
-                //i have a close bracket but stack is empty, then the exression is not valid
-                if (parenStack.Count == 0) return false;
-                parenStack.Pop();
-                continue;
-            }
-        }
-
-        //out the looop i still have open paren, expression is not valid
-        if (parenStack.Count > 0) return false;
-
-        return true;
-    }
-
-}
+// public class Tokenizer
+// {
+//     public static IEnumerable<Token> Tokenize(TextReader reader)
+//     {
+//         var validNumbers = new List<char> { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+//         var operators = new Dictionary<char, string>
+//         {
+//             {'+', "addition"},
+//             {'-', "sub"},
+//             {'*', "multiply"},
+//             {'/', "divide"},
+//         }
+//         ;
+//         var tokens = new List<Token>();
+//
+//         int input;
+//
+//         while (true)
+//         {
+//             input = reader.Read();
+//
+//             if (input == -1) break;
+//
+//             if ((char)input == '(' || (char)input == ')')
+//             {
+//                 tokens.Add(new Token("paren", (char)input));
+//                 continue;
+//             }
+//
+//             if (validNumbers.Contains((char)input))
+//             {
+//                 var fullNumber = new StringBuilder();
+//                 fullNumber.Append((char)input);
+//
+//                 while (validNumbers.Contains((char)reader.Peek()))
+//                 {
+//                     input = reader.Read();
+//                     fullNumber.Append((char)input);
+//                 }
+//
+//                 tokens.Add(new Token("number", fullNumber.ToString()));
+//                 continue;
+//             }
+//
+//             if (operators.TryGetValue((char)input, out string? result))
+//             {
+//                 if (result is not null)
+//                 {
+//                     tokens.Add(new Token(result, (char)input));
+//                 }
+//                 continue;
+//             }
+//
+//             //ignoring the whitespace
+//             if ((char)input == ' ') continue;
+//
+//             //if im here no condition got matched. throw some error 
+//             throw new Exception($"Could not match the character {input} ");
+//         }
+//
+//         return tokens;
+//     }
+//
+//     public static bool ValidateExpression(TextReader reader)
+//     {
+//         var parenStack = new Stack<char>();
+//
+//         int input;
+//
+//         while (true)
+//         {
+//             input = reader.Read();
+//             if (input == -1) break;
+//
+//             if ((char)input == '(')
+//             {
+//                 parenStack.Push('(');
+//                 continue;
+//             }
+//
+//             if ((char)input == ')')
+//             {
+//                 //i have a close bracket but stack is empty, then the exression is not valid
+//                 if (parenStack.Count == 0) return false;
+//                 parenStack.Pop();
+//                 continue;
+//             }
+//         }
+//
+//         //out the looop i still have open paren, expression is not valid
+//         if (parenStack.Count > 0) return false;
+//
+//         return true;
+//     }
+//
+// }
 
 public class Token
 {
