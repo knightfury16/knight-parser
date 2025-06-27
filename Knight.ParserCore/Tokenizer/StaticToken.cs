@@ -1,7 +1,7 @@
 namespace Knight.ParserCore.Tokenizer;
 
 
-public class StaticToken : Token
+internal class StaticToken : Token
 {
     public IReaderContext Context { get; set; }
     public override TokenType Type => TokenType.Static;

@@ -1,7 +1,7 @@
 
 namespace Knight.ParserCore.Tokenizer;
 
-public class CommentToken : Token
+internal class CommentToken : Token
 {
     public IReaderContext Context { get; }
     public override TokenType Type => TokenType.Comment;

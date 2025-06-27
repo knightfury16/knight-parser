@@ -1,7 +1,7 @@
 
 namespace Knight.ParserCore.Tokenizer;
 
-public class StartExpressionToken : Token
+internal class StartExpressionToken : Token
 {
     public IReaderContext Context { get; }
     public override TokenType Type => TokenType.StartExpression;

@@ -1,6 +1,6 @@
 namespace Knight.ParserCore.Tokenizer;
 
-public class EndExpressionToken : Token
+internal class EndExpressionToken : Token
 {
     public IReaderContext Context { get; }
     public override TokenType Type => TokenType.EndExpression;

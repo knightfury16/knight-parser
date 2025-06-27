@@ -1,6 +1,6 @@
 namespace Knight.ParserCore.Tokenizer;
 
-public class BlockAliasToken : Token
+internal class BlockAliasToken : Token
 {
     public IReaderContext Context { get; }
     public override TokenType Type => TokenType.BlockAlias;

@@ -1,6 +1,6 @@
 namespace Knight.ParserCore.Tokenizer;
 
-public class BlockWordToken : Token
+internal class BlockWordToken : Token
 {
     public IReaderContext Context { get; }
     public override TokenType Type => TokenType.BlockWord;
@@ -12,8 +12,4 @@ public class BlockWordToken : Token
         Context = context;
     }
 
-    public static Token BlockWordTokenizer(ExtendedStringReader sourceReader)
-    {
-
-    }
 }
