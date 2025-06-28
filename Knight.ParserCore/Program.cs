@@ -16,6 +16,8 @@ class Program
 
         var tokenzier = new Knight.ParserCore.Tokenizer.Tokenizer();
         var tokens = tokenzier.Tokenize(esr);
+        // var ast = Parser.Parse(tokens);
+        // var renderedExpression = Renderer.Render(ast, contextObject);
 
         foreach (var token in tokens)
         {
