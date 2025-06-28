@@ -14,13 +14,12 @@ class Program
         var stringReader = new StringReader(allTextContent);
         var esr = new ExtendedStringReader(stringReader);
 
-        while (true)
-        {
-            Console.WriteLine(esr.GetContext().ToString());
-            var input = esr.Read();
-            if (input == -1) break;
-            Console.WriteLine($"Character: {(char)input}");
+        var tokenzier = new Knight.ParserCore.Tokenizer.Tokenizer();
+        var tokens = tokenzier.Tokenize(esr);
 
+        foreach (var token in tokens)
+        {
+            Console.WriteLine($"{token.ToString()}");
         }
 
         // if (Tokenizer.ValidateExpression(stringReader))
