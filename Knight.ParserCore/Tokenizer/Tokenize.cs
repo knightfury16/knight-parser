@@ -57,7 +57,7 @@ internal class Tokenizer
                     node = sourceReader.Read(); //get over the second {
                     continue;
                 }
-                if ((char)node == '}' && (char)node == '}')
+                if ((char)node == '}' && (char)sourceReader.Peek() == '}')
                 {
                     tokens.Add(Token.EndExpression(sourceReader.GetContext()));
                     node = sourceReader.Read();
