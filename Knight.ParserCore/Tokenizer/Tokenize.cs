@@ -40,23 +40,27 @@ internal class Tokenizer
                             throw new Exception("Expression close not found while parsing space");
                         }
                     }
+                    continue; //get out of space loop
                 }
                 if ((char)node == '{' && (char)sourceReader.Peek() == '{')
                 {
                     tokens.Add(Token.StartExpression(sourceReader.GetContext()));
                     node = sourceReader.Read();
+                    node = sourceReader.Read(); //get over the second {
                     continue;
                 }
                 if ((char)node == '}' && (char)node == '}')
                 {
                     tokens.Add(Token.EndExpression(sourceReader.GetContext()));
                     node = sourceReader.Read();
+                    node = sourceReader.Read();
                     inExpression = false;
                     continue;
                 }
 
-                var token = VariableToken.VariableTokenizer(sourceReader);
-                token ??= BlockWordToken.BlockWordTokenizer(sourceReader);
+                // my source reader poniter might be at '{'
+                var token = VariableToken.VariableTokenizer(node, sourceReader);
+                // token ??= BlockWordToken.BlockWordTokenizer(sourceReader);
 
 
                 if (token is null)
