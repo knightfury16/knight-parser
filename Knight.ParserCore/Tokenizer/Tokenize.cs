@@ -24,7 +24,15 @@ internal class Tokenizer
 
         while (true)
         {
-            if (node == -1) break;
+            if (node == -1)
+            {
+                if (sb.Length > 0)
+                {
+                    tokens.Add(Token.Static(sb.ToString(), sourceReader.GetContext()));
+                }
+
+                break;
+            }
 
             if (inExpression)
             {
