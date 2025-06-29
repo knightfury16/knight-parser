@@ -28,6 +28,12 @@ internal class Tokenizer
             {
                 if (sb.Length > 0)
                 {
+                    Console.WriteLine($"At the end ");
+                    var charArray = sb.ToString().ToCharArray();
+                    foreach (var cha in charArray)
+                    {
+                        Console.WriteLine((int)cha);
+                    }
                     tokens.Add(Token.Static(sb.ToString(), sourceReader.GetContext()));
                 }
 
