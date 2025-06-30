@@ -1,9 +1,15 @@
-Hello, I'm {{name}}.
-
-{{#   if Ismale}}
-    Im a male.
-{{#else}}
-    Im a female.
+Hello im {{name}}
+{{#if boy }}
+	My favourite food is {{#if isCool }}
+    {{ coolFood }} name
+    {{#else}}
+    normal food name {{#endif}}
 {{#endif}}
-
-And my age is {{age}}
+{{#for people}}
+	{{#if this.isEmployed}}
+    	{{this.name}}
+        {{#else}}
+        	unemployed
+     {{#endif}}
+    {{this}}
+{{#endfor}}
