@@ -2,5 +2,10 @@ namespace Knight.ParserCore.Parser.Node;
 
 public class TextNode : RootNode
 {
-    public required string Text { get; set; }
+    public string Text { get; set; }
+
+    public TextNode(string text)
+    {
+        Text = text;
+    }
 }

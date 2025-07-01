@@ -1,6 +1,6 @@
 namespace Knight.ParserCore.Parser.Node;
 
-public class EvaluatorVariable
+public class EvaluatorVariable(string name)
 {
-    public required string Name { get; set; }
+    public string Name { get; set; } = name;
 }
