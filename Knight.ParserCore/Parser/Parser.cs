@@ -53,7 +53,7 @@ internal class Parser
         var blockNode = new BlockNode();
         var reachedEndExpression = false;
 
-        while (_position < _tokens.Count || reachedEndExpression)
+        while (_position < _tokens.Count && !reachedEndExpression)
         {
             switch (Peek())
             {
