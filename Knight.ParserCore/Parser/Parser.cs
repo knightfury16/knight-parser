@@ -51,8 +51,9 @@ internal class Parser
     private RootNode ParseBlock()
     {
         var blockNode = new BlockNode();
+        var reachedEndExpression = false;
 
-        while (_position < _tokens.Count)
+        while (_position < _tokens.Count || reachedEndExpression)
         {
             switch (Peek())
             {
@@ -60,7 +61,12 @@ internal class Parser
                     blockNode.Body.Append(ParseTextNode());
                     break;
                 case TokenType.StartExpression:
-                    blockNode.Body.Append(ParseExpression());
+                    var parsedExpression = ParseExpression();
+                    if (parsedExpression is null) reachedEndExpression = true;
+                    else
+                    {
+                        blockNode.Body.Append(parsedExpression);
+                    }
                     break;
 
                 default:
