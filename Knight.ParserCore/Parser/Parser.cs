@@ -25,9 +25,9 @@ internal class Parser
         _tokens = tokens;
     }
 
-    private TokenType Peek()
+    private TokenType? Peek()
     {
-        return _tokens[_position].Type;
+        return _position < _tokens.Count ? _tokens[_position].Type : null;
     }
 
     private Token Consume()
@@ -68,7 +68,6 @@ internal class Parser
                         blockNode.Body.Add(parsedExpression);
                     }
                     break;
-
                 default:
                     Console.WriteLine($"In {nameof(ParseBlock)}, expected token type static or StartExpression. Found {Peek().ToString()}");
                     break;
