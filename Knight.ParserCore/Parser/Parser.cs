@@ -58,14 +58,14 @@ internal class Parser
             switch (Peek())
             {
                 case TokenType.Static:
-                    blockNode.Body.Append(ParseTextNode());
+                    blockNode.Body.Add(ParseTextNode());
                     break;
                 case TokenType.StartExpression:
                     var parsedExpression = ParseExpression();
                     if (parsedExpression is null) reachedEndExpression = true;
                     else
                     {
-                        blockNode.Body.Append(parsedExpression);
+                        blockNode.Body.Add(parsedExpression);
                     }
                     break;
 
