@@ -78,7 +78,7 @@ internal class Parser
         return blockNode;
     }
 
-    private RootNode ParseExpression()
+    private RootNode? ParseExpression()
     {
         var startExpressionToken = Consume(); //consuming start expression
         RootNode? parsedExpressionNode = null; // doing this instead of directly returning is for consuming the end expression here also
@@ -95,12 +95,6 @@ internal class Parser
         else if (Peek() == TokenType.BlockWord)
         {
             parsedExpressionNode = ParseBlockstatement();
-
-        }
-
-        if (parsedExpressionNode is null)
-        {
-            throw new Exception($"In {nameof(ParseExpression)}, expected variable token or block word token found {Peek().ToString()}");
         }
 
         if (Peek() == TokenType.EndExpression) Consume(); // consuming the end expression
