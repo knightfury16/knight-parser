@@ -16,13 +16,16 @@ class Program
 
         var tokenzier = new Knight.ParserCore.Tokenizer.Tokenizer();
         var tokens = tokenzier.Tokenize(esr);
+        var parser = new Knight.ParserCore.Parser.Parser(tokens.ToList());
+        var ast = parser.ParseTemplate();
+        Console.WriteLine("Succesfully parsed template!!!");
         // var ast = Parser.Parse(tokens);
         // var renderedExpression = Renderer.Render(ast, contextObject);
 
-        foreach (var token in tokens)
-        {
-            Console.WriteLine($"{token.ToString()}");
-        }
+        // foreach (var token in tokens)
+        // {
+        //     Console.WriteLine($"{token.ToString()}");
+        // }
 
         // if (Tokenizer.ValidateExpression(stringReader))
         // {
