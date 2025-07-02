@@ -104,8 +104,66 @@ internal class Parser
     }
 
     //i need a BlockStatmentParser
-    private RootNode ParseBlockstatement()
+    private RootNode? ParseBlockstatement()
     {
+
+        var token = Consume();
+
+        switch (token.Value)
+        {
+            case "if":
+                var param = Consume();
+                Consume(); //consume the end expression
+                _blockStack.Push("if");
+                var consequent = ParseBlock();
+                RootNode? alternate = null;
+
+                var a = _blockStack.Pop();
+
+                if (a == "else")
+                {
+                    alternate = ParseBlock();
+                    a = _blockStack.Pop();
+                }
+
+                if (a == "endif")
+                {
+                    var blockStatement = new BlockStatement("if", param.Value) { Consequent = (BlockNode)consequent };
+                    blockStatement.Alternate = (BlockNode?)alternate;
+                    return blockStatement;
+                }
+                throw new Exception($"Expected else or endif found {a}");
+            case "else":
+                Consume();
+                _blockStack.Push("else");
+                return null;
+            case "endif":
+                Consume(); //consume the end expression
+                _blockStack.Push("endif");
+                return null;
+            case "for":
+                param = Consume();
+                Consume(); //consume the end expression
+                _blockStack.Push("for");
+                consequent = ParseBlock();
+
+                a = _blockStack.Pop();
+
+                if (a == "endfor")
+                {
+                    var blockStatement = new BlockStatement("for", param.Value) { Consequent = (BlockNode)consequent };
+                    return blockStatement;
+                }
+
+                throw new Exception($"Expected endfor found {a}");
+            case "endfor":
+                Consume();
+                _blockStack.Push("endfor");
+                return null;
+            default:
+                throw new Exception("Invalid block word");
+
+        }
 
     }
 
