@@ -12,7 +12,7 @@ namespace Knight.ParserCore.Parser;
 //Block ::= (TextNode | KnightStatement | BlockStatement)*
 //TextNode ::= value
 
-public class Parser
+internal class Parser
 {
 
     private List<Token> _tokens;
