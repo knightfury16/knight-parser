@@ -104,8 +104,8 @@ public class AstVisitor
 
     private static string FormatValue(string value)
     {
-        if (value.Length == 1)
-            return ((int)value[0]).ToString();
+        if (value == " ") return "SP";
+        else if (value == "\n") return "LF";
         else return value;
     }
 
