@@ -1,0 +1,7 @@
+{{#for users}}
+  {{#if this.active}}
+    {{this.name}} is active
+  {{#else}}
+    {{this.name}} is inactive
+  {{#endif}}
+{{#endfor}}

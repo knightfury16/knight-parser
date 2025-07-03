@@ -1,0 +1,5 @@
+{{#if isLoggedIn}}
+  Welcome back!
+{{#else}}
+  Please log in.
+{{#endif}}
