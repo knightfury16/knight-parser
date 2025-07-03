@@ -98,7 +98,15 @@ public class AstVisitor
     {
         Console.WriteLine("Text Node: ");
         Space(depth);
-        Console.WriteLine(textNode.Text);
+        var valueFomatted = FormatValue(textNode.Text);
+        Console.WriteLine(valueFomatted);
+    }
+
+    private static string FormatValue(string value)
+    {
+        if (value.Length == 1)
+            return ((int)value[0]).ToString();
+        else return value;
     }
 
     private static void VisitBlockStatement(BlockStatement blockStatement, int depth)

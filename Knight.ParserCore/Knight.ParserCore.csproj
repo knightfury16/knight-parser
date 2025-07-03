@@ -12,5 +12,11 @@
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
+    <ItemGroup>
+        <Content Include="../Knight.ParserCore.Test/Fixtures/*">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
 
 </Project>
