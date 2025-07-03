@@ -19,6 +19,7 @@ class Program
         var parser = new Knight.ParserCore.Parser.Parser(tokens.ToList());
         var ast = parser.ParseTemplate();
         Console.WriteLine("Succesfully parsed template!!!");
+        AstVisitor.VisitAst(ast);
         // var ast = Parser.Parse(tokens);
         // var renderedExpression = Renderer.Render(ast, contextObject);
 
