@@ -91,7 +91,7 @@ internal class Tokenizer
                 if ((char)node == '{' && (char)sourceReader.Peek() == '{')
                 {
                     inExpression = true;
-                    tokens.Add(Token.Static(sb.ToString(), sourceReader.GetContext()));
+                    if (sb.Length > 0) tokens.Add(Token.Static(sb.ToString(), sourceReader.GetContext()));
                     sb.Clear();
                     continue;
                 }
