@@ -36,7 +36,7 @@ internal class Parser
     }
 
 
-    public BodyNode ParseTemplate()
+    public TemplateNode ParseTemplate()
     {
         var parsedBlock = ParseBlock();
 
