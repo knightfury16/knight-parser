@@ -6,7 +6,6 @@ namespace Knight.ParserCore.Parser;
 
 public class AstVisitor
 {
-    private static int _spacer = 0;
 
     public static void VisitAst(TemplateNode templateNode)
     {
@@ -20,12 +19,53 @@ public class AstVisitor
 
     }
 
-    public static void PrintTemplateBody(TemplateNode templateNode)
+    public static void PrintTemplateBody(TemplateNode templateNode, bool recurse = false)
     {
-        Console.WriteLine("Body of the template are: ");
+        if (recurse) { PrintTemplateRecursively(templateNode, 1); }
+        else { PrintBody(templateNode, 1); }
+    }
+
+
+    private static void PrintTemplateRecursively(BodyNode bodyNode, int depth)
+    {
+        if (depth == 1)
+        {
+            Console.WriteLine("Recursive Template node print: ");
+        }
+
+        foreach (var node in bodyNode.Body)
+        {
+            if (node is not BlockStatement)
+            {
+                Space(depth);
+                Console.WriteLine(node.GetType());
+            }
+            if (node is BlockStatement blockStatement)
+            {
+                Space(depth);
+                Console.WriteLine(node.GetType());
+                Space(depth + 1);
+                Console.WriteLine("Consequent Body: ");
+                PrintTemplateRecursively(blockStatement.Consequent, depth + 2);
+                if (blockStatement.Alternate is not null)
+                {
+                    Space(depth + 1);
+                    Console.WriteLine("Alternate Body: ");
+                    PrintTemplateRecursively(blockStatement.Alternate, depth + 2);
+
+                }
+            }
+        }
+    }
+
+
+    private static void PrintBody(TemplateNode templateNode, int depth)
+    {
+        Console.WriteLine("Body are: ");
+
         foreach (var node in templateNode.Body)
         {
-            Space(1);
+            Space(depth);
             Console.WriteLine(node.GetType());
         }
     }
