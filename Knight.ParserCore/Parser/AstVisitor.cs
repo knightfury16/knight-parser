@@ -20,7 +20,16 @@ public class AstVisitor
 
     }
 
+    public static void PrintTemplateBody(TemplateNode templateNode)
     {
+        Console.WriteLine("Body of the template are: ");
+        foreach (var node in templateNode.Body)
+        {
+            Space(1);
+            Console.WriteLine(node.GetType());
+        }
+    }
+
     private static void VisitBody(List<RootNode> body, int depth)
     {
 
