@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Knight.ParserCore", "Knight.ParserCore\Knight.ParserCore.csproj", "{4742829F-7D77-4145-94CF-EA320375BCFA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Knight.ParserCore.Test", "Knight.ParserCore.Test\Knight.ParserCore.Test.csproj", "{7FF2BFF3-C16D-44B5-9957-D8D7CFCA86DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{4742829F-7D77-4145-94CF-EA320375BCFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4742829F-7D77-4145-94CF-EA320375BCFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4742829F-7D77-4145-94CF-EA320375BCFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FF2BFF3-C16D-44B5-9957-D8D7CFCA86DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FF2BFF3-C16D-44B5-9957-D8D7CFCA86DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FF2BFF3-C16D-44B5-9957-D8D7CFCA86DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FF2BFF3-C16D-44B5-9957-D8D7CFCA86DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
