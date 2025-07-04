@@ -1,0 +1,12 @@
+{{#if user}}
+  Hello {{user.name}}!
+  {{#if user.isPremium}}
+    Thanks for being a premium member.
+  {{#else}}
+    Upgrade to premium for more benefits.
+  {{#endif}}
+{{#endif}}
+
+{{#for user.notifications}}
+  - {{this.message}} {{#if this.read}}(read){{#else}}(unread){{#endif}}
+{{#endfor}}
