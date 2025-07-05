@@ -44,4 +44,17 @@ public class BasicParserTest
 
 
     }
+
+    [Fact]
+    public void IfElseConditionTest()
+    {
+        string source = BasicHelper.GetIfElseCondition();
+        var ast = TemporaryTestHelper.GiveMeAst(source);
+        Assert.Collection(ast.Body,
+                node => NodeAsserter.AssertIfElseBlockStatement(node, "isLoggedIn"),
+                node => NodeAsserter.AssertTextNode(node, "\n")
+                );
+
+
+    }
 }
