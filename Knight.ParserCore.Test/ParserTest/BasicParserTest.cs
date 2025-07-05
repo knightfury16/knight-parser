@@ -1,4 +1,3 @@
-using Knight.ParserCore.Parser.Node;
 using Knight.ParserCore.Test.Fixtures.Basic;
 using Knight.ParserCore.Test.Util;
 using Knight.ParserCore.Utils;
@@ -28,6 +27,19 @@ public class BasicParserTest
                 node => NodeAsserter.AssertTextNode(node, "Hello, "),
                 node => NodeAsserter.AssertKnightNode(node, "userName"),
                 node => NodeAsserter.AssertTextNode(node, "!\n")
+                );
+
+
+    }
+
+    [Fact]
+    public void IfConditionTest()
+    {
+        string source = BasicHelper.GetIfCondition();
+        var ast = TemporaryTestHelper.GiveMeAst(source);
+        Assert.Collection(ast.Body,
+                node => NodeAsserter.AssertIfBlockStatement(node, "isAdmin"),
+                node => NodeAsserter.AssertTextNode(node, "\n")
                 );
 
 
