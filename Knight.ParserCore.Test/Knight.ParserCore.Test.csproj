@@ -24,4 +24,10 @@
     <ProjectReference Include="..\Knight.ParserCore\Knight.ParserCore.csproj" />
   </ItemGroup>
 
+<ItemGroup>
+    <Content Include="./Fixtures/Basic/*">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+</ItemGroup>
+
 </Project>
