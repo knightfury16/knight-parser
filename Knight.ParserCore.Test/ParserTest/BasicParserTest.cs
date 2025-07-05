@@ -17,4 +17,19 @@ public class BasicParserTest
                 node => NodeAsserter.AssertTextNode(node, "Hello world.\r\nThe new world is the best world.\r\n"));
 
     }
+
+
+    [Fact]
+    public void SimpleVariableTest()
+    {
+        string source = BasicHelper.GetSimpleVariable();
+        var ast = TemporaryTestHelper.GiveMeAst(source);
+        Assert.Collection(ast.Body,
+                node => NodeAsserter.AssertTextNode(node, "Hello, "),
+                node => NodeAsserter.AssertKnightNode(node, "userName"),
+                node => NodeAsserter.AssertTextNode(node, "!\n")
+                );
+
+
+    }
 }
