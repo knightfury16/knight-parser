@@ -22,6 +22,7 @@ public static class NodeAsserter
         Assert.Equal("if", blockStatement.EvaluatorVariable.Name);
         var param = blockStatement.Parameter.FirstOrDefault();
         Assert.NotNull(param);
+        Assert.Null(blockStatement.Alternate);
         Assert.Equal(paramName, param.Name);
     }
 
