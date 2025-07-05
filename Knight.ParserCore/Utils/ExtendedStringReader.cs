@@ -15,6 +15,11 @@ internal sealed class ExtendedStringReader : TextReader
         _inner = reader;
     }
 
+    public ExtendedStringReader(string source)
+    {
+        _inner = new StringReader(source);
+    }
+
     public override int Peek()
     {
         return _inner.Peek();
