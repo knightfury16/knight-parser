@@ -1,0 +1,11 @@
+namespace Knight.ParserCore.Test.Fixtures.Basic;
+
+
+public static class BasicHelper
+{
+    public static string GetNoAction()
+    {
+        var source = "Hello world.\r\nThe new world is the best world.\r\n";
+        return source;
+    }
+}
