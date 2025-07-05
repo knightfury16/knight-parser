@@ -8,4 +8,10 @@ public static class BasicHelper
         var source = "Hello world.\r\nThe new world is the best world.\r\n";
         return source;
     }
+
+    public static string GetSimpleVariable()
+    {
+        var source = "Hello, {{userName}}!\n";
+        return source;
+    }
 }
