@@ -26,4 +26,10 @@ public static class BasicHelper
         var source = File.ReadAllText("./Fixtures/Basic/IfelseBlock.text");
         return source;
     }
+
+    public static string GetForLoop()
+    {
+        var source = File.ReadAllText("./Fixtures/Basic/ForLoop.text");
+        return source;
+    }
 }

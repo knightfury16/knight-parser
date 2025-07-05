@@ -57,4 +57,17 @@ public class BasicParserTest
 
 
     }
+
+    [Fact]
+    public void ForLoopTest()
+    {
+        string source = BasicHelper.GetForLoop();
+        var ast = TemporaryTestHelper.GiveMeAst(source);
+        Assert.Collection(ast.Body,
+                node => NodeAsserter.AssertForBlockStatement(node, "items"),
+                node => NodeAsserter.AssertTextNode(node, "\n")
+                );
+
+
+    }
 }
