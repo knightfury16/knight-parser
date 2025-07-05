@@ -14,4 +14,10 @@ public static class BasicHelper
         var source = "Hello, {{userName}}!\n";
         return source;
     }
+
+    public static string GetIfCondition()
+    {
+        var source = File.ReadAllText("./Fixtures/Basic/IfCondition.text");
+        return source;
+    }
 }
