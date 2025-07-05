@@ -9,7 +9,7 @@ namespace Knight.ParserCore.Test.ParserTest;
 public class BasicParserTest
 {
     [Fact]
-    public void NoAction()
+    public void NoActionTest()
     {
         string source = BasicHelper.GetNoAction();
         var ast = TemporaryTestHelper.GiveMeAst(source);
