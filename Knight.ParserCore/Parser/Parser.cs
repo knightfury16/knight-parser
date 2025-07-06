@@ -193,5 +193,17 @@ internal class Parser
         throw new ParserException($"In ParseTextNode expected static token found {token.Type.ToString()}");
 
     }
+
+    private bool ExceptToken(TokenType expectedTokenType, out Token token)
+    {
+        token = null!;
+        // if(im at the end throw exception)
+
+        if (Peek() != expectedTokenType)
+            throw new ParserException($"Expected {expectedTokenType}, found {Peek()}");
+
+        token = Consume();
+        return true;
+    }
 }
 
