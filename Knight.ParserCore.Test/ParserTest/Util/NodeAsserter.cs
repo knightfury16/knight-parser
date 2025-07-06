@@ -1,4 +1,5 @@
 using Knight.ParserCore.Parser.Node;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Knight.ParserCore.Test.Util;
 
@@ -6,8 +7,20 @@ public static class NodeAsserter
 {
     public static void AssertTextNode(RootNode node, string expected)
     {
-        var text = Assert.IsType<TextNode>(node);
+        var text = AssertTextNodeType(node);
         Assert.Equal(expected, text.Text);
+    }
+    public static void AssertTextNode(RootNode node, params string[] expected)
+    {
+        var text = AssertTextNodeType(node);
+        string actual = text.Text;
+        Assert.Contains(actual, expected);
+    }
+
+    public static TextNode AssertTextNodeType(RootNode node)
+    {
+        var text = Assert.IsType<TextNode>(node);
+        return text;
     }
 
     public static void AssertKnightNode(RootNode node, string evalName)
@@ -44,5 +57,18 @@ public static class NodeAsserter
         Assert.NotNull(param);
         Assert.Equal(paramName, param.Name);
         Assert.Null(blockStatement.Alternate);
+    }
+}
+
+public  class LineEndingComparer : IEqualityComparer<string>
+{
+    public bool Equals(string? x, string? y)
+    {
+        throw new NotImplementedException();
+    }
+
+    public int GetHashCode([DisallowNull] string obj)
+    {
+        throw new NotImplementedException();
     }
 }
