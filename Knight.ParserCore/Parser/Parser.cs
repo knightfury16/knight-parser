@@ -45,7 +45,7 @@ internal class Parser
             return new TemplateNode(bodyNode.Body.ToList());
         }
 
-        throw new Exception($"In {nameof(ParseTemplate)}, parsed body is not a body node");
+        throw new ParserException($"In {nameof(ParseTemplate)}, parsed body is not a body node");
     }
 
     private RootNode ParseBlock()
@@ -84,7 +84,7 @@ internal class Parser
 
         if (startExpressionToken is not StartExpressionToken)
         {
-            throw new Exception($"In {nameof(ParseExpression)}, expected StartExpression Token found {startExpressionToken.Type.ToString()}");
+            throw new ParserException($"In {nameof(ParseExpression)}, expected StartExpression Token found {startExpressionToken.Type.ToString()}");
         }
 
         if (Peek() == TokenType.Variable)
@@ -131,7 +131,7 @@ internal class Parser
                     blockStatement.Alternate = (BlockNode?)alternate;
                     return blockStatement;
                 }
-                throw new Exception($"Expected else or endif found {a}");
+                throw new ParserException($"Expected else or endif found {a}");
             case "else":
                 Consume();
                 _blockStack.Push("else");
@@ -154,13 +154,13 @@ internal class Parser
                     return blockStatement;
                 }
 
-                throw new Exception($"Expected endfor found {a}");
+                throw new ParserException($"Expected endfor found {a}");
             case "endfor":
                 Consume();
                 _blockStack.Push("endfor");
                 return null;
             default:
-                throw new Exception("Invalid block word");
+                throw new ParserException("Invalid block word");
 
         }
 
@@ -173,7 +173,7 @@ internal class Parser
 
         if (token is not VariableToken)
         {
-            throw new Exception($"In {nameof(ParseKnightstatement)}, expected Variable token found {token.Type.ToString()}");
+            throw new ParserException($"In {nameof(ParseKnightstatement)}, expected Variable token found {token.Type.ToString()}");
         }
 
         return new KnightStatement(token.Value);
@@ -190,7 +190,7 @@ internal class Parser
             return new TextNode(token.Value);
         }
 
-        throw new Exception($"In ParseTextNode expected static token found {token.Type.ToString()}");
+        throw new ParserException($"In ParseTextNode expected static token found {token.Type.ToString()}");
 
     }
 }
