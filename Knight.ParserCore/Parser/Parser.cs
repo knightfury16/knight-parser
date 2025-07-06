@@ -106,7 +106,9 @@ internal class Parser
     private RootNode? ParseBlockstatement()
     {
 
-        var token = Consume();
+        if (!ExceptToken(TokenType.BlockWord, out var token))
+            return null;
+
 
         switch (token.Value)
         {
@@ -163,7 +165,40 @@ internal class Parser
                 throw new ParserException("Invalid block word");
 
         }
+        // return blockToken.Value switch
+        // {
+        //     "if" => ParseIfStatement(),
+        //     "else" => ParseElseStatement(),
+        //     "endif" => ParseEndIfStatement(),
+        //     "for" => ParseForStatement(),
+        //     "endFor" => ParseEndForStatement(),
+        //     _ => throw new ParserException($"Unknown block word: {blockToken.Value}")
+        // };
+    }
 
+    private RootNode? ParseEndForStatement()
+    {
+        throw new NotImplementedException();
+    }
+
+    private RootNode? ParseForStatement()
+    {
+        throw new NotImplementedException();
+    }
+
+    private RootNode? ParseEndIfStatement()
+    {
+        throw new NotImplementedException();
+    }
+
+    private RootNode? ParseElseStatement()
+    {
+        throw new NotImplementedException();
+    }
+
+    private RootNode? ParseIfStatement()
+    {
+        throw new NotImplementedException();
     }
 
     //a knightStatementParser
