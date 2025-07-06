@@ -7,6 +7,7 @@ namespace Knight.ParserCore.Test.ParserTest;
 
 public class BasicParserTest
 {
+    #region Valid Cases
     [Fact]
     public void NoActionTest()
     {
@@ -70,4 +71,10 @@ public class BasicParserTest
 
 
     }
+    #endregion Valid Cases
+
+
+    #region Invalid Cases
+    // I should all test all the invalid cases with exception
+    #endregion Invalid Cases
 }
