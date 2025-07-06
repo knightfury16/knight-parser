@@ -39,7 +39,7 @@ public class BasicParserTest
         var ast = TemporaryTestHelper.GiveMeAst(source);
         Assert.Collection(ast.Body,
                 node => NodeAsserter.AssertIfBlockStatement(node, "isAdmin"),
-                node => NodeAsserter.AssertTextNode(node, "\n")
+                node => NodeAsserter.AssertTextNode(node, "\n", "\r\n")
                 );
 
 
@@ -52,7 +52,7 @@ public class BasicParserTest
         var ast = TemporaryTestHelper.GiveMeAst(source);
         Assert.Collection(ast.Body,
                 node => NodeAsserter.AssertIfElseBlockStatement(node, "isLoggedIn"),
-                node => NodeAsserter.AssertTextNode(node, "\n")
+                node => NodeAsserter.AssertTextNode(node, "\n", "\r\n")
                 );
 
 
@@ -65,7 +65,7 @@ public class BasicParserTest
         var ast = TemporaryTestHelper.GiveMeAst(source);
         Assert.Collection(ast.Body,
                 node => NodeAsserter.AssertForBlockStatement(node, "items"),
-                node => NodeAsserter.AssertTextNode(node, "\n")
+                node => NodeAsserter.AssertTextNode(node, "\n", "\r\n")
                 );
 
 
