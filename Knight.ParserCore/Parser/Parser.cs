@@ -21,7 +21,7 @@ internal class Parser
 
     public Parser(List<Token> tokens)
     {
-        _tokens = tokens;
+        _tokens = tokens ?? throw new ArgumentNullException(nameof(tokens));
     }
 
     private TokenType? Peek()
