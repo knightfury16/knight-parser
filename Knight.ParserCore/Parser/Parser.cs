@@ -14,8 +14,7 @@ namespace Knight.ParserCore.Parser;
 
 internal class Parser
 {
-
-    private List<Token> _tokens;
+    private readonly List<Token> _tokens;
     private int _position = 0;
     private Stack<string> _blockStack = new();
 
