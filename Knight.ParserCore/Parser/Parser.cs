@@ -34,7 +34,10 @@ internal class Parser
         return _tokens[_position++];
     }
 
+    private bool IsAtEnd => _position >= _tokens.Count;
 
+
+    // this is the entry point to this class
     public TemplateNode ParseTemplate()
     {
         var parsedBlock = ParseBlock();
@@ -44,30 +47,30 @@ internal class Parser
     private BodyNode ParseBlock()
     {
         var blockNode = new BlockNode();
-        var reachedEndExpression = false;
 
-        while (_position < _tokens.Count && !reachedEndExpression)
+        while (!IsAtEnd)
         {
-            switch (Peek())
+            var node = ParseBlockElement();
+
+            if (node is null)
             {
-                case TokenType.Static:
-                    blockNode.Body.Add(ParseTextNode());
-                    break;
-                case TokenType.StartExpression:
-                    var parsedExpression = ParseExpression();
-                    if (parsedExpression is null) reachedEndExpression = true;
-                    else
-                    {
-                        blockNode.Body.Add(parsedExpression);
-                    }
-                    break;
-                default:
-                    Console.WriteLine($"In {nameof(ParseBlock)}, expected token type static or StartExpression. Found {Peek().ToString()}");
-                    break;
+                break;
             }
+
+            blockNode.Body.Add(node);
         }
 
         return blockNode;
+    }
+
+    private RootNode? ParseBlockElement()
+    {
+        return Peek() switch
+        {
+            TokenType.Static => ParseTextNode(),
+            TokenType.StartExpression => ParseExpression(),
+            _ => throw new ParserException($"Unexpected token type: {Peek()}. Expected Static  or StartExpression token.")
+        };
     }
 
     private RootNode? ParseExpression()
