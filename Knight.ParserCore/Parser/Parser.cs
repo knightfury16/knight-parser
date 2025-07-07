@@ -73,6 +73,20 @@ internal class Parser
         };
     }
 
+    // a TextNodeParser
+    private RootNode ParseTextNode()
+    {
+        var token = Consume();
+
+        if (token is StaticToken staticToken)
+        {
+            return new TextNode(token.Value);
+        }
+
+        throw new ParserException($"In ParseTextNode expected static token found {token.Type.ToString()}");
+
+    }
+
     private RootNode? ParseExpression()
     {
         var startExpressionToken = Consume(); //consuming start expression
@@ -98,6 +112,19 @@ internal class Parser
 
     }
 
+    //a knightStatementParser
+    private RootNode ParseKnightstatement()
+    {
+        var token = Consume();
+
+        if (token is not VariableToken)
+        {
+            throw new ParserException($"In {nameof(ParseKnightstatement)}, expected Variable token found {token.Type.ToString()}");
+        }
+
+        return new KnightStatement(token.Value);
+    }
+
     //i need a BlockStatmentParser
     private RootNode? ParseBlockstatement()
     {
@@ -116,46 +143,6 @@ internal class Parser
         };
     }
 
-    private RootNode? ParseEndForStatement()
-    {
-
-        Consume();
-        _blockStack.Push(TemplateKeywords.EndFor);
-        return null;
-    }
-
-    private RootNode? ParseForStatement()
-    {
-
-        var param = Consume();
-        Consume(); //consume the end expression
-        _blockStack.Push(TemplateKeywords.For);
-        var consequent = ParseBlock();
-
-        var a = _blockStack.Pop();
-
-        if (a == TemplateKeywords.EndFor)
-        {
-            var blockStatement = new BlockStatement(TemplateKeywords.For, param.Value) { Consequent = (BlockNode)consequent };
-            return blockStatement;
-        }
-
-        throw new ParserException($"Expected endfor found {a}");
-    }
-
-    private RootNode? ParseEndIfStatement()
-    {
-        Consume(); //consume the end expression
-        _blockStack.Push(TemplateKeywords.EndIf);
-        return null;
-    }
-
-    private RootNode? ParseElseStatement()
-    {
-        Consume(); // consume the end expression
-        _blockStack.Push(TemplateKeywords.Else);
-        return null;
-    }
 
     private RootNode? ParseIfStatement()
     {
@@ -189,32 +176,46 @@ internal class Parser
         throw new ParserException($"Expected else or endif found {a}");
     }
 
-    //a knightStatementParser
-    private RootNode ParseKnightstatement()
+
+    private RootNode? ParseElseStatement()
     {
-        var token = Consume();
-
-        if (token is not VariableToken)
-        {
-            throw new ParserException($"In {nameof(ParseKnightstatement)}, expected Variable token found {token.Type.ToString()}");
-        }
-
-        return new KnightStatement(token.Value);
+        Consume(); // consume the end expression
+        _blockStack.Push(TemplateKeywords.Else);
+        return null;
     }
 
-
-    // a TextNodeParser
-    private RootNode ParseTextNode()
+    private RootNode? ParseEndIfStatement()
     {
-        var token = Consume();
+        Consume(); //consume the end expression
+        _blockStack.Push(TemplateKeywords.EndIf);
+        return null;
+    }
 
-        if (token is StaticToken staticToken)
+    private RootNode? ParseForStatement()
+    {
+
+        var param = Consume();
+        Consume(); //consume the end expression
+        _blockStack.Push(TemplateKeywords.For);
+        var consequent = ParseBlock();
+
+        var a = _blockStack.Pop();
+
+        if (a == TemplateKeywords.EndFor)
         {
-            return new TextNode(token.Value);
+            var blockStatement = new BlockStatement(TemplateKeywords.For, param.Value) { Consequent = (BlockNode)consequent };
+            return blockStatement;
         }
 
-        throw new ParserException($"In ParseTextNode expected static token found {token.Type.ToString()}");
+        throw new ParserException($"Expected endfor found {a}");
+    }
 
+    private RootNode? ParseEndForStatement()
+    {
+
+        Consume();
+        _blockStack.Push(TemplateKeywords.EndFor);
+        return null;
     }
 
     private bool ExceptToken(TokenType expectedTokenType, out Token token)
