@@ -106,99 +106,91 @@ internal class Parser
     private RootNode? ParseBlockstatement()
     {
 
-        if (!ExceptToken(TokenType.BlockWord, out var token))
+        if (!ExceptToken(TokenType.BlockWord, out var blockToken))
             return null;
 
-
-        switch (token.Value)
+        return blockToken.Value switch
         {
-            case "if":
-                var param = Consume();
-                Consume(); //consume the end expression
-                _blockStack.Push("if");
-                var consequent = ParseBlock();
-                RootNode? alternate = null;
-
-                var a = _blockStack.Pop();
-
-                if (a == "else")
-                {
-                    alternate = ParseBlock();
-                    a = _blockStack.Pop();
-                }
-
-                if (a == "endif")
-                {
-                    var blockStatement = new BlockStatement("if", param.Value) { Consequent = (BlockNode)consequent };
-                    blockStatement.Alternate = (BlockNode?)alternate;
-                    return blockStatement;
-                }
-                throw new ParserException($"Expected else or endif found {a}");
-            case "else":
-                Consume();
-                _blockStack.Push("else");
-                return null;
-            case "endif":
-                Consume(); //consume the end expression
-                _blockStack.Push("endif");
-                return null;
-            case "for":
-                param = Consume();
-                Consume(); //consume the end expression
-                _blockStack.Push("for");
-                consequent = ParseBlock();
-
-                a = _blockStack.Pop();
-
-                if (a == "endfor")
-                {
-                    var blockStatement = new BlockStatement("for", param.Value) { Consequent = (BlockNode)consequent };
-                    return blockStatement;
-                }
-
-                throw new ParserException($"Expected endfor found {a}");
-            case "endfor":
-                Consume();
-                _blockStack.Push("endfor");
-                return null;
-            default:
-                throw new ParserException("Invalid block word");
-
-        }
-        // return blockToken.Value switch
-        // {
-        //     "if" => ParseIfStatement(),
-        //     "else" => ParseElseStatement(),
-        //     "endif" => ParseEndIfStatement(),
-        //     "for" => ParseForStatement(),
-        //     "endFor" => ParseEndForStatement(),
-        //     _ => throw new ParserException($"Unknown block word: {blockToken.Value}")
-        // };
+            TemplateKeywords.If => ParseIfStatement(),
+            TemplateKeywords.Else => ParseElseStatement(),
+            TemplateKeywords.EndIf => ParseEndIfStatement(),
+            TemplateKeywords.For => ParseForStatement(),
+            TemplateKeywords.EndFor => ParseEndForStatement(),
+            _ => throw new ParserException($"Unknown block word: {blockToken.Value}")
+        };
     }
 
     private RootNode? ParseEndForStatement()
     {
-        throw new NotImplementedException();
+
+        Consume();
+        _blockStack.Push(TemplateKeywords.EndFor);
+        return null;
     }
 
     private RootNode? ParseForStatement()
     {
-        throw new NotImplementedException();
+
+        var param = Consume();
+        Consume(); //consume the end expression
+        _blockStack.Push(TemplateKeywords.For);
+        var consequent = ParseBlock();
+
+        var a = _blockStack.Pop();
+
+        if (a == TemplateKeywords.EndFor)
+        {
+            var blockStatement = new BlockStatement(TemplateKeywords.For, param.Value) { Consequent = (BlockNode)consequent };
+            return blockStatement;
+        }
+
+        throw new ParserException($"Expected endfor found {a}");
     }
 
     private RootNode? ParseEndIfStatement()
     {
-        throw new NotImplementedException();
+        Consume(); //consume the end expression
+        _blockStack.Push(TemplateKeywords.EndIf);
+        return null;
     }
 
     private RootNode? ParseElseStatement()
     {
-        throw new NotImplementedException();
+        Consume(); // consume the end expression
+        _blockStack.Push(TemplateKeywords.Else);
+        return null;
     }
 
     private RootNode? ParseIfStatement()
     {
-        throw new NotImplementedException();
+        var param = Consume();
+
+        Consume(); //consume the end expression
+
+        _blockStack.Push(TemplateKeywords.If);
+
+        // the consequent of the if statement
+        var consequent = ParseBlock();
+
+        RootNode? alternate = null;
+
+        var a = _blockStack.Pop();
+
+        if (a == TemplateKeywords.Else)
+        {
+            // this is the alternate statement if else exists
+            alternate = ParseBlock();
+
+            a = _blockStack.Pop();
+        }
+
+        if (a == TemplateKeywords.EndIf)
+        {
+            var blockStatement = new BlockStatement(TemplateKeywords.If, param.Value) { Consequent = (BlockNode)consequent };
+            blockStatement.Alternate = (BlockNode?)alternate;
+            return blockStatement;
+        }
+        throw new ParserException($"Expected else or endif found {a}");
     }
 
     //a knightStatementParser
