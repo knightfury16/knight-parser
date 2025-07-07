@@ -76,27 +76,16 @@ internal class Parser
     // a TextNodeParser
     private RootNode ParseTextNode()
     {
+        ExpectToken(TokenType.Static, out var token);
 
-        var token = Consume();
-
-        if (token is StaticToken staticToken)
-        {
-            return new TextNode(token.Value);
-        }
-
-        throw new ParserException($"In ParseTextNode expected static token found {token.Type.ToString()}");
-
+        return new TextNode(token.Value);
     }
 
     private RootNode? ParseExpression()
     {
-        var startExpressionToken = Consume(); //consuming start expression
-        RootNode? parsedExpressionNode = null; // doing this instead of directly returning is for consuming the end expression here also
+        ExpectToken(TokenType.StartExpression, out var startExpressionToken); // consuming the start token
 
-        if (startExpressionToken is not StartExpressionToken)
-        {
-            throw new ParserException($"In {nameof(ParseExpression)}, expected StartExpression Token found {startExpressionToken.Type.ToString()}");
-        }
+        RootNode? parsedExpressionNode = null; // doing this instead of directly returning is for consuming the end expression here also
 
         if (Peek() == TokenType.Variable)
         {
@@ -107,22 +96,16 @@ internal class Parser
             parsedExpressionNode = ParseBlockstatement();
         }
 
+        //this might not be always end expression
         if (Peek() == TokenType.EndExpression) Consume(); // consuming the end expression
 
         return parsedExpressionNode;
-
     }
 
     //a knightStatementParser
     private RootNode ParseKnightstatement()
     {
-        var token = Consume();
-
-        if (token is not VariableToken)
-        {
-            throw new ParserException($"In {nameof(ParseKnightstatement)}, expected Variable token found {token.Type.ToString()}");
-        }
-
+        ExpectToken(TokenType.Variable, out var token);
         return new KnightStatement(token.Value);
     }
 
