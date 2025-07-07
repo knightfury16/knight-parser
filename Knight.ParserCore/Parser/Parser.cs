@@ -28,6 +28,9 @@ internal class Parser
 
     private Token Consume()
     {
+        //theoretically this if will not catch 
+        if (_position >= _tokens.Count) throw new InvalidOperationException("Attempted to consume token beyond end of input.");
+
         return _tokens[_position++];
     }
 
