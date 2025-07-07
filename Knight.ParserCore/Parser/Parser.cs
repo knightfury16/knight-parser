@@ -76,6 +76,7 @@ internal class Parser
     // a TextNodeParser
     private RootNode ParseTextNode()
     {
+
         var token = Consume();
 
         if (token is StaticToken staticToken)
@@ -129,7 +130,7 @@ internal class Parser
     private RootNode? ParseBlockstatement()
     {
 
-        if (!ExceptToken(TokenType.BlockWord, out var blockToken))
+        if (!ExpectToken(TokenType.BlockWord, out var blockToken))
             return null;
 
         return blockToken.Value switch
@@ -218,7 +219,7 @@ internal class Parser
         return null;
     }
 
-    private bool ExceptToken(TokenType expectedTokenType, out Token token)
+    private bool ExpectToken(TokenType expectedTokenType, out Token token)
     {
         token = null!;
         // if(im at the end throw exception)
