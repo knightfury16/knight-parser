@@ -24,10 +24,7 @@ internal class Parser
         _tokens = tokens ?? throw new ArgumentNullException(nameof(tokens));
     }
 
-    private TokenType? Peek()
-    {
-        return _position < _tokens.Count ? _tokens[_position].Type : null;
-    }
+    private TokenType? Peek() => _position < _tokens.Count ? _tokens[_position].Type : null;
 
     private Token Consume()
     {
