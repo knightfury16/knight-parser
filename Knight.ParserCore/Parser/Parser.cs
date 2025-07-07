@@ -35,16 +35,10 @@ internal class Parser
     public TemplateNode ParseTemplate()
     {
         var parsedBlock = ParseBlock();
-
-        if (parsedBlock is BodyNode bodyNode)
-        {
-            return new TemplateNode(bodyNode.Body.ToList());
-        }
-
-        throw new ParserException($"In {nameof(ParseTemplate)}, parsed body is not a body node");
+        return new TemplateNode(parsedBlock.Body);
     }
 
-    private RootNode ParseBlock()
+    private BodyNode ParseBlock()
     {
         var blockNode = new BlockNode();
         var reachedEndExpression = false;
