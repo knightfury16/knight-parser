@@ -1,3 +1,4 @@
+using Knight.ParserCore.Parser.Node;
 using Knight.ParserCore.Test.Fixtures.Basic;
 using Knight.ParserCore.Test.Util;
 using Knight.ParserCore.Utils;
@@ -46,6 +47,23 @@ public class BasicParserTest
 
     }
 
+    //i need to evaluate the inside of a block statement too
+    [Fact]
+    public void IfConditionTestWithRecurse()
+    {
+        string source = BasicHelper.GetIfCondition();
+        var ast = TemporaryTestHelper.GiveMeAst(source);
+
+        //expeted statement
+        var expectedStatement = new ExpectedStatement(1, typeof(TextNode));
+
+
+        Assert.Collection(ast.Body,
+                node => NodeAsserter.AssertIfBlockStatement(node, "isAdmin", expectedStatement),
+                node => NodeAsserter.AssertTextNode(node, "\n", "\r\n")
+                );
+    }
+
     [Fact]
     public void IfElseConditionTest()
     {
@@ -60,12 +78,47 @@ public class BasicParserTest
     }
 
     [Fact]
+    public void IfElseConditionTestWithRecurse()
+    {
+        string source = BasicHelper.GetIfElseCondition();
+        var ast = TemporaryTestHelper.GiveMeAst(source);
+
+        var expectedStatement = new ExpectedStatement(1, [typeof(TextNode)]);
+        expectedStatement.SetAlternateStatementsInOrder(1, [typeof(TextNode)]);
+
+
+        Assert.Collection(ast.Body,
+                node => NodeAsserter.AssertIfElseBlockStatement(node, "isLoggedIn", expectedStatement),
+                node => NodeAsserter.AssertTextNode(node, "\n", "\r\n")
+                );
+
+
+    }
+
+    [Fact]
     public void ForLoopTest()
     {
         string source = BasicHelper.GetForLoop();
         var ast = TemporaryTestHelper.GiveMeAst(source);
         Assert.Collection(ast.Body,
                 node => NodeAsserter.AssertForBlockStatement(node, "items"),
+                node => NodeAsserter.AssertTextNode(node, "\n", "\r\n")
+                );
+
+
+    }
+
+    [Fact]
+    public void ForLoopTestWithRecurse()
+    {
+        string source = BasicHelper.GetForLoop();
+        var ast = TemporaryTestHelper.GiveMeAst(source);
+
+        //expected
+        var expectedStatement = new ExpectedStatement(3, [typeof(TextNode), typeof(KnightStatement), typeof(TextNode)]);
+
+        Assert.Collection(ast.Body,
+                node => NodeAsserter.AssertForBlockStatement(node, "items", expectedStatement),
                 node => NodeAsserter.AssertTextNode(node, "\n", "\r\n")
                 );
 
