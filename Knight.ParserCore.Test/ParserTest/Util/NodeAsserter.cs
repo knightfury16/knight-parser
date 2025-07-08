@@ -67,8 +67,20 @@ public  class LineEndingComparer : IEqualityComparer<string>
         throw new NotImplementedException();
     }
 
-    public int GetHashCode([DisallowNull] string obj)
+    // i need a assert block statement method that assert inside the block statement
+    public static void AssertBlock(BlockNode block, int? numberOfStatement, IEnumerable<string>? expectedStatementsInOrder = null)
     {
-        throw new NotImplementedException();
+        if (numberOfStatement is not null)
+        {
+            Assert.Equal(numberOfStatement, block.Body.Count);
+        }
+
+        if (expectedStatementsInOrder is not null)
+        {
+            List<string> listOfBodyTypes = block.Body.Select(node => node.GetType().ToString()).ToList();
+            var areSameInOrder = listOfBodyTypes.SequenceEqual(expectedStatementsInOrder);
+            Assert.True(areSameInOrder, "The block statements are not in order or same");
+        }
     }
+
 }
