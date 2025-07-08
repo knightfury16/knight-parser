@@ -156,7 +156,7 @@ internal class Parser
             blockStatement.Alternate = (BlockNode?)alternate;
             return blockStatement;
         }
-        throw new ParserException($"Expected else or endif found {a}");
+        throw new ParserException($"Expected {TemplateKeywords.Else} or {TemplateKeywords.EndIf}, found {a}");
     }
 
 
@@ -191,7 +191,7 @@ internal class Parser
             return blockStatement;
         }
 
-        throw new ParserException($"Expected endfor found {a}");
+        throw new ParserException($"Expected {TemplateKeywords.EndFor}, found {a}");
     }
 
     private RootNode? ParseEndForStatement()
