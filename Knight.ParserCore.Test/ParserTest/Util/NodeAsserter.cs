@@ -1,5 +1,5 @@
 using Knight.ParserCore.Parser.Node;
-using System.Diagnostics.CodeAnalysis;
+using Knight.ParserCore.Parser;
 
 namespace Knight.ParserCore.Test.Util;
 
@@ -32,7 +32,7 @@ public static class NodeAsserter
     public static void AssertIfBlockStatement(RootNode node, string paramName)
     {
         var blockStatement = Assert.IsType<BlockStatement>(node);
-        Assert.Equal("if", blockStatement.EvaluatorVariable.Name);
+        Assert.Equal(TemplateKeywords.If, blockStatement.EvaluatorVariable.Name);
         var param = blockStatement.Parameter.FirstOrDefault();
         Assert.NotNull(param);
         Assert.Null(blockStatement.Alternate);
@@ -42,7 +42,7 @@ public static class NodeAsserter
     public static void AssertIfElseBlockStatement(RootNode node, string paramName)
     {
         var blockStatement = Assert.IsType<BlockStatement>(node);
-        Assert.Equal("if", blockStatement.EvaluatorVariable.Name);
+        Assert.Equal(TemplateKeywords.If, blockStatement.EvaluatorVariable.Name);
         var param = blockStatement.Parameter.FirstOrDefault();
         Assert.NotNull(param);
         Assert.Equal(paramName, param.Name);
@@ -52,7 +52,8 @@ public static class NodeAsserter
     public static void AssertForBlockStatement(RootNode node, string paramName)
     {
         var blockStatement = Assert.IsType<BlockStatement>(node);
-        Assert.Equal("for", blockStatement.EvaluatorVariable.Name);
+        Assert.Equal(TemplateKeywords.For, blockStatement.EvaluatorVariable.Name);
+
         var param = blockStatement.Parameter.FirstOrDefault();
         Assert.NotNull(param);
         Assert.Equal(paramName, param.Name);
