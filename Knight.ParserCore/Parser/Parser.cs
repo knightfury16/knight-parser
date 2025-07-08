@@ -97,7 +97,7 @@ internal class Parser
         }
 
         //this might not be always end expression
-        if (Peek() == TokenType.EndExpression) Consume(); // consuming the end expression
+        if (Peek() == TokenType.EndExpression) ExpectToken(TokenType.EndExpression, out var _);
 
         return parsedExpressionNode;
     }
@@ -130,9 +130,8 @@ internal class Parser
 
     private RootNode? ParseIfStatement()
     {
-        var param = Consume();
-
-        Consume(); //consume the end expression
+        ExpectToken(TokenType.Variable, out var variableToken);
+        ExpectToken(TokenType.EndExpression, out var _); //consuming the end the token
 
         _blockStack.Push(TemplateKeywords.If);
 
@@ -153,7 +152,7 @@ internal class Parser
 
         if (a == TemplateKeywords.EndIf)
         {
-            var blockStatement = new BlockStatement(TemplateKeywords.If, param.Value) { Consequent = (BlockNode)consequent };
+            var blockStatement = new BlockStatement(TemplateKeywords.If, variableToken.Value) { Consequent = (BlockNode)consequent };
             blockStatement.Alternate = (BlockNode?)alternate;
             return blockStatement;
         }
@@ -163,14 +162,14 @@ internal class Parser
 
     private RootNode? ParseElseStatement()
     {
-        Consume(); // consume the end expression
+        ExpectToken(TokenType.EndExpression, out var _);//consume the end expression
         _blockStack.Push(TemplateKeywords.Else);
         return null;
     }
 
     private RootNode? ParseEndIfStatement()
     {
-        Consume(); //consume the end expression
+        ExpectToken(TokenType.EndExpression, out var _);//consume the end expression
         _blockStack.Push(TemplateKeywords.EndIf);
         return null;
     }
@@ -178,8 +177,9 @@ internal class Parser
     private RootNode? ParseForStatement()
     {
 
-        var param = Consume();
-        Consume(); //consume the end expression
+        ExpectToken(TokenType.Variable, out var variableToken);
+        ExpectToken(TokenType.EndExpression, out var _); // consuming the end expression
+
         _blockStack.Push(TemplateKeywords.For);
         var consequent = ParseBlock();
 
@@ -187,7 +187,7 @@ internal class Parser
 
         if (a == TemplateKeywords.EndFor)
         {
-            var blockStatement = new BlockStatement(TemplateKeywords.For, param.Value) { Consequent = (BlockNode)consequent };
+            var blockStatement = new BlockStatement(TemplateKeywords.For, variableToken.Value) { Consequent = (BlockNode)consequent };
             return blockStatement;
         }
 
@@ -196,8 +196,7 @@ internal class Parser
 
     private RootNode? ParseEndForStatement()
     {
-
-        Consume();
+        ExpectToken(TokenType.EndExpression, out var _); // consuming the end expression
         _blockStack.Push(TemplateKeywords.EndFor);
         return null;
     }
