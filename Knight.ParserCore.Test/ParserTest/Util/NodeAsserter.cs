@@ -39,6 +39,16 @@ public static class NodeAsserter
         Assert.Equal(paramName, param.Name);
     }
 
+    public static void AssertIfBlockStatement(RootNode node, string paramName, ExpectedStatement expectedStatement)
+    {
+        AssertIfBlockStatement(node, paramName);
+
+        //if here then node is block statement
+        var blockStatement = (BlockStatement)node;
+
+        AssertBlock((BlockNode)blockStatement.Consequent, expectedStatement.ConsequentStatementCount, expectedStatement.ConsequentStatementsInOrder);
+    }
+
     public static void AssertIfElseBlockStatement(RootNode node, string paramName)
     {
         var blockStatement = Assert.IsType<BlockStatement>(node);
@@ -47,6 +57,18 @@ public static class NodeAsserter
         Assert.NotNull(param);
         Assert.Equal(paramName, param.Name);
         Assert.NotNull(blockStatement.Alternate);
+    }
+
+    public static void AssertIfElseBlockStatement(RootNode node, string paramName, ExpectedStatement expectedStatement)
+    {
+        AssertIfElseBlockStatement(node, paramName);
+
+        //if here im block statement with alternate route
+        var blockStatement = (BlockStatement)node;
+
+        AssertBlock((BlockNode)blockStatement.Consequent, expectedStatement.ConsequentStatementCount, expectedStatement.ConsequentStatementsInOrder);
+
+        AssertBlock((BlockNode)blockStatement.Alternate!, expectedStatement.AlternateStatementCount, expectedStatement.AlternateStatementsInOrder);
     }
 
     public static void AssertForBlockStatement(RootNode node, string paramName)
@@ -59,13 +81,15 @@ public static class NodeAsserter
         Assert.Equal(paramName, param.Name);
         Assert.Null(blockStatement.Alternate);
     }
-}
 
-public  class LineEndingComparer : IEqualityComparer<string>
-{
-    public bool Equals(string? x, string? y)
+    public static void AssertForBlockStatement(RootNode node, string paramName, ExpectedStatement expectedStatement)
     {
-        throw new NotImplementedException();
+        AssertForBlockStatement(node, paramName);
+
+        //if here then block statement
+        var blockStatement = (BlockStatement)node;
+
+        AssertBlock((BlockNode)blockStatement.Consequent, expectedStatement.ConsequentStatementCount, expectedStatement.ConsequentStatementsInOrder);
     }
 
     // i need a assert block statement method that assert inside the block statement
