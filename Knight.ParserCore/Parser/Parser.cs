@@ -204,7 +204,8 @@ internal class Parser
     private bool ExpectToken(TokenType expectedTokenType, out Token token)
     {
         token = null!;
-        // if(im at the end throw exception)
+
+        if (IsAtEnd) throw new Exception($"Expected {expectedTokenType}, no token found. At the end of the file.");
 
         if (Peek() != expectedTokenType)
             throw new ParserException($"Expected {expectedTokenType}, found {Peek()}");
