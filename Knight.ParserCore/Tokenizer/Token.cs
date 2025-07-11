@@ -45,10 +45,6 @@ internal abstract class Token
     {
         return new BlockWordToken(value, context);
     }
-    public static BlockAliasToken BlockAlias(string value, IReaderContext context)
-    {
-        return new BlockAliasToken(value, context);
-    }
     public static VariableToken Variable(string value, IReaderContext context)
     {
         return new VariableToken(value, context);
