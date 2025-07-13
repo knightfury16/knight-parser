@@ -5,7 +5,6 @@ namespace Knight.ParserCore.Tokenizer;
 
 internal static class Tokenizer
 {
-    public const char Space = ' ';
     //Hello, I'm {name}.
 
     // {#   if Ismale}
@@ -57,9 +56,9 @@ internal static class Tokenizer
             if (inExpression)
             {
                 //get rid of space
-                if ((char)node == Space)
+                if (char.IsWhiteSpace((char)node))
                 {
-                    while ((char)node == Space)
+                    while (char.IsWhiteSpace((char)node))
                     {
                         node = sourceReader.Read();
 
