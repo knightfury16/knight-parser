@@ -3,13 +3,14 @@ namespace Knight.ParserCore.Tokenizer;
 
 internal class StartExpressionToken : Token
 {
+    public static readonly string StartExpressionString = "{{";
     public IReaderContext Context { get; }
     public override TokenType Type => TokenType.StartExpression;
     public override string Value { get; }
 
-    public StartExpressionToken(string value, IReaderContext context)
+    public StartExpressionToken(IReaderContext context)
     {
-        Value = value;
+        Value = StartExpressionString;
         Context = context;
     }
 }

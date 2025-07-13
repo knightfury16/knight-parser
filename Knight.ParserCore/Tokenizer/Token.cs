@@ -21,24 +21,16 @@ internal abstract class Token
         return new StaticToken(value, context);
     }
 
-    public static StartExpressionToken StartExpression(string value, IReaderContext context)
-    {
-        return new StartExpressionToken(value, context);
-    }
 
     public static StartExpressionToken StartExpression(IReaderContext context)
     {
-        return new StartExpressionToken("{{", context);
+        return new StartExpressionToken(context);
     }
 
-    public static EndExpressionToken EndExpression(string value, IReaderContext context)
-    {
-        return new EndExpressionToken(value, context);
-    }
 
     public static EndExpressionToken EndExpression(IReaderContext context)
     {
-        return new EndExpressionToken("}}", context);
+        return new EndExpressionToken(context);
     }
 
     public static BlockWordToken BlockWord(string value, IReaderContext context)
