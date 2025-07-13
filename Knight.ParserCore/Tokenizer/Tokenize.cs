@@ -3,7 +3,7 @@ using System.Text;
 namespace Knight.ParserCore.Tokenizer;
 
 
-internal class Tokenizer
+internal static class Tokenizer
 {
     public const char Space = ' ';
     //Hello, I'm {name}.
@@ -16,7 +16,20 @@ internal class Tokenizer
     //
     // And my age is {age}
 
-    public IEnumerable<Token> Tokenize(ExtendedStringReader sourceReader)
+    public static IEnumerable<Token> Tokenize(ExtendedStringReader sourceReader)
+    {
+        try
+        {
+            return TokenizeImpl(sourceReader);
+        }
+        catch (System.Exception ex)
+        {
+            throw new TokenizerException("An Exception occured while trying to tokenize the template: ", ex);
+        }
+    }
+
+
+    private static IEnumerable<Token> TokenizeImpl(ExtendedStringReader sourceReader)
     {
         var tokens = new List<Token>();
         var sb = new StringBuilder();
