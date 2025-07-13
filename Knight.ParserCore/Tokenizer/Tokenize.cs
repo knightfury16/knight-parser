@@ -96,7 +96,7 @@ internal static class Tokenizer
 
                 // my source reader poniter might be at '{'
                 var token = VariableToken.VariableTokenizer(node, sourceReader);
-                token ??= BlockWordToken.BlockWordTokenizer(node, sourceReader);
+                token ??= BlockTokenTokenizer.Tokenzie(node, sourceReader);
 
 
                 if (token is null)
