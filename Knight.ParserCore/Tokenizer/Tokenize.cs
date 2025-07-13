@@ -1,10 +1,19 @@
 using System.Text;
+using Knight.ParserCore.Tokenizer.TokenTypesTokenizer;
 
 namespace Knight.ParserCore.Tokenizer;
 
 
 internal static class Tokenizer
 {
+
+    private static readonly ITokenTypeTokenizer StaticTokenTokenizer = new StaticTokenTokenizer();
+    private static readonly ITokenTypeTokenizer StartTokenTokenizer = new StartTokenTokenizer();
+    private static readonly ITokenTypeTokenizer EndTokenTokenizer = new EndTokenTokenizer();
+    private static readonly ITokenTypeTokenizer VariableTokenizer = new VariableTokenTokenizer();
+    private static readonly ITokenTypeTokenizer BlockTokenTokenizer = new BlockTokenTokenizer();
+    private static readonly ITokenTypeTokenizer EnumeratorTokenTokenizer = new EnumeratorTokenTokenizer();
+    private static readonly ITokenTypeTokenizer CommentTokenTokenizer = new CommentTokenTokenizer();
     //Hello, I'm {name}.
 
     // {#   if Ismale}
