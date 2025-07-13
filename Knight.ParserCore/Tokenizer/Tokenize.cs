@@ -73,7 +73,7 @@ internal static class Tokenizer
 
                         if (node == -1)
                         {
-                            throw new Exception("Expression close not found while parsing space");
+                            throw new TokenizerException("Expression close not found while parsing space");
                         }
                     }
                     continue; //get out of space loop
