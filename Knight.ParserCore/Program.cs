@@ -15,13 +15,7 @@ class Program
         var stringReader = new StringReader(allTextContent);
         var esr = new ExtendedStringReader(stringReader);
 
-        var tokenzier = new Knight.ParserCore.Tokenizer.Tokenizer();
-        var tokens = tokenzier.Tokenize(esr);
-        var parser = new Knight.ParserCore.Parser.Parser(tokens.ToList());
-        var ast = parser.ParseTemplate();
-        Console.WriteLine("Succesfully parsed template!!!");
-        AstVisitor.VisitAst(ast);
-        AstVisitor.PrintTemplateBody(ast);
+        var tokens = Tokenizer.Tokenizer.Tokenize(esr);
         // var ast = Parser.Parse(tokens);
         // var renderedExpression = Renderer.Render(ast, contextObject);
 
