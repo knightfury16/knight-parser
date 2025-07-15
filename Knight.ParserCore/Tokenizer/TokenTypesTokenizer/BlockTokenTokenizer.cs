@@ -32,7 +32,7 @@ internal class BlockTokenTokenizer : ITokenTypeTokenizer
 
             accumulator.Append((char)node);
 
-            if ((char)sourceReader.Peek() == '}' || (char)sourceReader.Peek() == ' ')
+            if ((char)sourceReader.Peek() == '}' || char.IsWhiteSpace((char)sourceReader.Peek()))
             {
                 break;
             }
@@ -45,7 +45,7 @@ internal class BlockTokenTokenizer : ITokenTypeTokenizer
     {
         while (true)
         {
-            if ((char)sourceReader.Peek() == ' ') sourceReader.Read();
+            if (char.IsWhiteSpace((char)sourceReader.Peek())) sourceReader.Read();
             else break;
         }
     }
