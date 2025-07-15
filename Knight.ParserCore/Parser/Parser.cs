@@ -131,6 +131,7 @@ internal class Parser
     private RootNode? ParseIfStatement()
     {
         ExpectToken(TokenType.Variable, out var variableToken);
+        // TODO: Might not have an en expression, might be another variable 
         ExpectToken(TokenType.EndExpression, out var _); //consuming the end the token
 
         _blockStack.Push(TemplateKeywords.If);
