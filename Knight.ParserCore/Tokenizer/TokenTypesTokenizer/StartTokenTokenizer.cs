@@ -1,3 +1,5 @@
+using Knight.ParserCore.Utils;
+
 namespace Knight.ParserCore.Tokenizer.TokenTypesTokenizer;
 
 
@@ -5,6 +7,17 @@ internal class StartTokenTokenizer : ITokenTypeTokenizer
 {
     public Token? Tokenzie(int node, ExtendedStringReader sourceReader)
     {
-        throw new NotImplementedException();
+        ArgumentNullException.ThrowIfNull(sourceReader);
+
+        if (node! > 0 && node.ToChar() != '{') return null;
+
+        if (node.ToChar() == '{' && sourceReader.Peek().ToChar() == '{')
+        {
+            //consuming the second '{'
+            sourceReader.Read();
+            return Token.StartExpression(sourceReader.GetContext());
+        }
+
+        return null;
     }
 }
