@@ -1,4 +1,4 @@
-jnamespace Knight.ParserCore.Utils;
+namespace Knight.ParserCore.Utils;
 
 public static class IntExtension
 {
