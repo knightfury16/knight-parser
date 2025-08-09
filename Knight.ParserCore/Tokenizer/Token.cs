@@ -27,6 +27,11 @@ internal abstract class Token
         return new StartExpressionToken(context);
     }
 
+    public static CommentToken Comment(string value, IReaderContext context)
+    {
+        return new CommentToken(value, context);
+    }
+
 
     public static EndExpressionToken EndExpression(IReaderContext context)
     {
