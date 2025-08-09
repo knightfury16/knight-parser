@@ -1,5 +1,6 @@
 using System.Text;
 using Knight.ParserCore.Tokenizer.TokenTypesTokenizer;
+using Knight.ParserCore.Utils;
 
 namespace Knight.ParserCore.Tokenizer;
 
@@ -64,10 +65,12 @@ internal static class Tokenizer
 
             if (inExpression)
             {
+                // when i am in expression i will be already inside the {{
                 //get rid of space
-                if (char.IsWhiteSpace((char)node))
+                //TODO: can get rid of this if
+                if (char.IsWhiteSpace(node.ToChar()))
                 {
-                    while (char.IsWhiteSpace((char)node))
+                    while (char.IsWhiteSpace(node.ToChar()))
                     {
                         node = sourceReader.Read();
 
@@ -76,15 +79,19 @@ internal static class Tokenizer
                             throw new TokenizerException("Expression close not found while parsing space");
                         }
                     }
-                    continue; //get out of space loop
                 }
-                if ((char)node == '{' && (char)sourceReader.Peek() == '{')
+
+                // my source reader poniter now is inside the {{ and handled the white space
+                var token = BlockTokenTokenizer.Tokenzie(node, sourceReader);
+                token ??= VariableTokenizer.Tokenzie(node, sourceReader);
+
+                if (token is not null)
                 {
-                    tokens.Add(Token.StartExpression(sourceReader.GetContext()));
+                    tokens.Add(token);
                     node = sourceReader.Read();
-                    node = sourceReader.Read(); //get over the second {
                     continue;
                 }
+
                 if ((char)node == '}' && (char)sourceReader.Peek() == '}')
                 {
                     tokens.Add(Token.EndExpression(sourceReader.GetContext()));
@@ -94,26 +101,22 @@ internal static class Tokenizer
                     continue;
                 }
 
-                // my source reader poniter might be at '{'
-                var token = VariableTokenizer.Tokenzie(node, sourceReader);
-                token ??= BlockTokenTokenizer.Tokenzie(node, sourceReader);
-
-
-                if (token is null)
-                {
-                    throw new Exception("Some thing went wrong. Token is null");
-                }
-
-                tokens.Add(token);
-
-                node = sourceReader.Read();
+                throw new Exception($"Some thing went wrong. Token is null. Node: {node.ToChar()}, Context: {sourceReader.GetContext()}");
             }
             else
             {
                 if ((char)node == '{' && (char)sourceReader.Peek() == '{')
                 {
                     inExpression = true;
+                    //Tokenize the Static Expression
                     if (sb.Length > 0) tokens.Add(Token.Static(sb.ToString(), sourceReader.GetContext()));
+
+                    //Tokenize the Start Expression 
+                    var startExpressionToken = StartTokenTokenizer.Tokenzie(node, sourceReader);
+                    if (startExpressionToken is null) throw new TokenizerException($"Could not tokenize start expression. Node:{node.ToChar()}, Context:{sourceReader.GetContext()}");
+                    tokens.Add(startExpressionToken);
+                    node = sourceReader.Read(); // moving one pointer to get inside the expression
+
                     sb.Clear();
                     continue;
                 }
