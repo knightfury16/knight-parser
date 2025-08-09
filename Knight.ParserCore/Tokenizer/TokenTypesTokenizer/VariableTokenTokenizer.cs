@@ -21,7 +21,7 @@ internal class VariableTokenTokenizer : ITokenTypeTokenizer
 
         while (true)
         {
-            if (node == -1) throw new Exception("Reach end of the file while tokenizing variable name");
+            if (node == -1) throw new TokenizerException("Reach end of the file while tokenizing variable name");
 
             accumulator.Append((char)node);
 
