@@ -1,4 +1,5 @@
 using System.Text;
+using Knight.ParserCore.Utils;
 
 namespace Knight.ParserCore.Tokenizer.TokenTypesTokenizer;
 
@@ -13,26 +14,27 @@ internal class BlockTokenTokenizer : ITokenTypeTokenizer
 
         var context = sourceReader.GetContext();
 
-        if (!IsValidBlockWord((char)node))
+        if (!IsValidBlockWord(node.ToChar()))
         {
             return null;
         }
 
-        var accumulator = new StringBuilder();
-
         //get rid of the space after # until the first character
         CleanSpaceInBetween(sourceReader);
 
+        var accumulator = new StringBuilder();
+
+
         while (true)
         {
-            //lets not include the # in the token value
+            //lets not include the # or white spcae in the token value
             node = sourceReader.Read();
 
             if (node == -1) throw new Exception("Reach end of the file while tokenizing blockword name");
 
-            accumulator.Append((char)node);
+            accumulator.Append(node.ToChar());
 
-            if ((char)sourceReader.Peek() == '}' || char.IsWhiteSpace((char)sourceReader.Peek()))
+            if (sourceReader.Peek().ToChar() == '}' || char.IsWhiteSpace(sourceReader.Peek().ToChar()))
             {
                 break;
             }
@@ -45,7 +47,7 @@ internal class BlockTokenTokenizer : ITokenTypeTokenizer
     {
         while (true)
         {
-            if (char.IsWhiteSpace((char)sourceReader.Peek())) sourceReader.Read();
+            if (char.IsWhiteSpace(sourceReader.Peek().ToChar())) sourceReader.Read();
             else break;
         }
     }
