@@ -83,6 +83,7 @@ internal static class Tokenizer
 
                 // my source reader poniter now is inside the {{ and handled the white space
                 var token = BlockTokenTokenizer.Tokenzie(node, sourceReader);
+                token ??= EnumeratorTokenTokenizer.Tokenzie(node, sourceReader);
                 token ??= VariableTokenizer.Tokenzie(node, sourceReader);
                 token ??= CommentTokenTokenizer.Tokenzie(node, sourceReader);
 
