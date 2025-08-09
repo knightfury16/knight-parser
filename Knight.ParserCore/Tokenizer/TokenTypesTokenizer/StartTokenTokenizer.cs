@@ -9,7 +9,15 @@ internal class StartTokenTokenizer : ITokenTypeTokenizer
     {
         ArgumentNullException.ThrowIfNull(sourceReader);
 
-        if (node! > 0 && node.ToChar() != '{') return null;
+        if (node == -1)
+        {
+            return null;
+        }
+
+        if (node > 0 && node.ToChar() != '{')
+        {
+            return null;
+        }
 
         if (node.ToChar() == '{' && sourceReader.Peek().ToChar() == '{')
         {
