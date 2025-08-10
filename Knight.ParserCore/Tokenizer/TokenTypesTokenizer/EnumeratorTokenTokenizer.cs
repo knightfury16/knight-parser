@@ -66,7 +66,7 @@ internal class EnumeratorTokenTokenizer : ITokenTypeTokenizer
 
         if (i != 'i' && n != 'n')
         {
-            throw new TokenizerException($"Enumerator syntax error. Expected in founr {i}{n}. Value: {node.ToChar()} Context: {source.GetContext()}");
+            throw new TokenizerException($"Enumerator syntax error. Expected 'in' found {i}{n}. Value: {node.ToChar()} Context: {source.GetContext()}");
         }
 
         source.Read(); // Pointer on n
