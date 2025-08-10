@@ -22,6 +22,7 @@ internal class EnumeratorTokenTokenizer : ITokenTypeTokenizer
         node = sourceReader.Read(); //skip the ~
 
         //I need to parse till after the 'in'
+        //TODO: Refactor this
         while (true)
         {
             if (node == -1) throw new TokenizerException("Reach end of the file while tokenizing variable name");
