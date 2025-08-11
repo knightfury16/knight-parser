@@ -96,9 +96,10 @@ internal static class Tokenizer
 
                 if ((char)node == '}' && (char)sourceReader.Peek() == '}')
                 {
-                    tokens.Add(Token.EndExpression(sourceReader.GetContext()));
-                    node = sourceReader.Read();
-                    node = sourceReader.Read();
+                    // Doing this extra tokenizer bussiness for granularity of future logic
+                    var endToken = EndTokenTokenizer.Tokenzie(node, sourceReader);
+                    if (endToken is null) throw new TokenizerException($"Could not tokenize end expression. Node:{node.ToChar()}, Context:{sourceReader.GetContext()}");
+                    tokens.Add(endToken);
                     inExpression = false;
                     continue;
                 }
