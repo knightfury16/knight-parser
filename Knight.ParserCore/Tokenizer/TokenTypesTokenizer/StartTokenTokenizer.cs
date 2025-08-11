@@ -9,12 +9,12 @@ internal class StartTokenTokenizer : ITokenTypeTokenizer
     {
         ArgumentNullException.ThrowIfNull(sourceReader);
 
-        if (node == -1)
+        if (node <= 0)
         {
             return null;
         }
 
-        if (node > 0 && node.ToChar() != '{')
+        if (node.ToChar() != '{')
         {
             return null;
         }
