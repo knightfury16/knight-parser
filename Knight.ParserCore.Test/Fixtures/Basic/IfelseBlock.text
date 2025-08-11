@@ -1,5 +1,6 @@
-{{#if isLoggedIn}}
+{{#if isLoggedIn age   }}
+{{! this is my comment }}
   Welcome back!
-{{#else}}
+{{  #else}}
   Please log in.
 {{#endif}}
