@@ -11,7 +11,7 @@ class Program
         // var myExpression = "(2 * ( 4 - 2 ))";
         // var myExpression = "(123 + (6 / 2) * (321) * ( 4 - 2 ))";
         // var myExpression = "((6 / 2) * (321) * ( 4 - 2 ))";
-        var allTextContent = File.ReadAllText("../Knight.ParserCore.Test/Fixtures/ForLoop.text");
+        var allTextContent = File.ReadAllText("../Knight.ParserCore.Test/Fixtures/Basic/ForLoopIterator.text");
         var stringReader = new StringReader(allTextContent);
         var esr = new ExtendedStringReader(stringReader);
 
@@ -19,10 +19,10 @@ class Program
         // var ast = Parser.Parse(tokens);
         // var renderedExpression = Renderer.Render(ast, contextObject);
 
-        // foreach (var token in tokens)
-        // {
-        //     Console.WriteLine($"{token.ToString()}");
-        // }
+        foreach (var token in tokens)
+        {
+            Console.WriteLine($"{token.ToString()}");
+        }
 
         // if (Tokenizer.ValidateExpression(stringReader))
         // {
