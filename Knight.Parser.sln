@@ -1,11 +1,11 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Knight.ParserCore", "Knight.ParserCore\Knight.ParserCore.csproj", "{4742829F-7D77-4145-94CF-EA320375BCFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Knight.ParserCore", "Knight.ParserCore\Knight.ParserCore.csproj", "{4742829F-7D77-4145-94CF-EA320375BCFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Knight.ParserCore.Test", "Knight.ParserCore.Test\Knight.ParserCore.Test.csproj", "{7FF2BFF3-C16D-44B5-9957-D8D7CFCA86DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Knight.ParserCore.Test", "Knight.ParserCore.Test\Knight.ParserCore.Test.csproj", "{7FF2BFF3-C16D-44B5-9957-D8D7CFCA86DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
