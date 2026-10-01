@@ -7,6 +7,7 @@ internal sealed class ExtendedStringReader : TextReader
     private int _lineNumber;
     private int _charPosition;
     private int _matched;
+    private int _currentReadPosition;
 
     private readonly TextReader _inner;
 
@@ -29,6 +30,7 @@ internal sealed class ExtendedStringReader : TextReader
     {
         var c = _inner.Read();
         if (c >= 0) AdvancePosition((char)c);
+        _currentReadPosition = c;
         return c;
     }
 
@@ -62,7 +64,8 @@ internal sealed class ExtendedStringReader : TextReader
         return new ReaderContext
         {
             LineNumber = _lineNumber,
-            CharacterPosition = _charPosition
+            CharacterPosition = _charPosition,
+            CurrentReaderPosition = _currentReadPosition
         };
     }
 
@@ -71,6 +74,7 @@ internal sealed class ExtendedStringReader : TextReader
     {
         public int LineNumber { get; set; }
         public int CharacterPosition { get; set; }
+        public int CurrentReaderPosition { get; set; }
 
         public override string ToString()
         {

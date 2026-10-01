@@ -5,5 +5,6 @@ public interface IReaderContext
 {
     public int LineNumber { get; set; }
     public int CharacterPosition { get; set; }
+    public int CurrentReaderPosition { get; set; }
 
 }
