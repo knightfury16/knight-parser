@@ -3,13 +3,11 @@ namespace Knight.ParserCore.Tokenizer;
 
 internal class StaticToken : Token
 {
-    public IReaderContext Context { get; set; }
     public override TokenType Type => TokenType.Static;
     public override string Value { get; }
 
-    public StaticToken(string value, IReaderContext context)
+    public StaticToken(string value, IReaderContext context) : base(context)
     {
-        Context = context;
         Value = value;
     }
 

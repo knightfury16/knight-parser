@@ -6,9 +6,18 @@ internal abstract class Token
     //I could have context on the base class,
     //but do i need context in all the token
 
+    //This is future me: yes we need context in all token
+
     public abstract TokenType Type { get; }
 
     public abstract string Value { get; }
+
+    public IReaderContext Context { get; }
+
+    protected Token(IReaderContext context)
+    {
+        Context = context;
+    }
 
     public sealed override string ToString()
     {
